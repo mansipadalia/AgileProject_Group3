@@ -1,17 +1,19 @@
 package GEDCOM;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Family {
 
     private String id;
-    private GregorianCalendar married;
-    private GregorianCalendar divorced;
+    private LocalDate married;
+    private LocalDate divorced;
     private String husbandID;
     private String husbandName;
     private String wifeId;
     private String wifeName;
-    private String children;
+    private List<String> children = new ArrayList<String>();
 
     public String getId() {
         return id;
@@ -20,17 +22,17 @@ public class Family {
         this.id = id;
     }
 
-    public GregorianCalendar getMarried() {
+    public LocalDate getMarried() {
         return married;
     }
-    public void setMarried(GregorianCalendar married) {
+    public void setMarried(LocalDate married) {
         this.married = married;
     }
 
-    public GregorianCalendar getDivorced() {
+    public LocalDate getDivorced() {
         return divorced;
     }
-    public void setDivorced(GregorianCalendar divorced) {
+    public void setDivorced(LocalDate divorced) {
         this.divorced = divorced;
     }
 
@@ -61,12 +63,11 @@ public class Family {
     public void setWifeName(String wifeName) {
         this.wifeName = wifeName;
     }
-
-    public String getChildren() {
-        return children;
-    }
-    public void setChildren(String children) {
-        this.children = children;
-    }
-
+	public List<String> getChildren() {
+		return children;
+	}
+	public void setChildren(List<String> children) {
+		this.children = children;
+	}
+	
 }
