@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.lang.*;
 
 
 public class Parser {
@@ -164,29 +165,27 @@ public class Parser {
 			setIndividualList(IList);
 			setFamilyList(FList);
 			
-			/*System.out.println("------------ Individual List ------------");
+			String individualFormat = "|%1$-8s|%2$-20s|%3$-8s|%4$-12s|%5$-5s|%6$-7s|%7$-12s|%8$-9s|%9$-9s|%n";
+			System.out.println("Individuals");
+			System.out.format("+--------+--------------------+--------+------------+-----+-------+------------+---------+---------+%n");
+			System.out.format("|   ID   |        Name        | Gender |  Birthday  | Age | Alive |    Death   |  Child  |  Spouse |%n");
+			System.out.format("+--------+--------------------+--------+------------+-----+-------+------------+---------+---------+%n");
+			
 			for (Individual i : getIndividualList()) {
-				System.out.println(i.getId());
-				System.out.println(i.getName());
-				System.out.println(i.getGender());
-				System.out.println(i.getBirthday());
-				System.out.println(i.getAge());
-				System.out.println(i.isAlive());
-				System.out.println(i.getDeath());
-				System.out.println(i.getChild());
-				System.out.println(i.getSpouse());
-			}
-			System.out.println("------------ Family List ------------");
+				System.out.format(individualFormat, i.getId(), i.getName(), i.getGender(), i.getBirthday(), i.getAge(), i.isAlive(), i.getDeath(), i.getChild(), i.getSpouse());
+			}			
+			System.out.format("+--------+--------------------+--------+------------+-----+-------+------------+---------+---------+%n");
+			
+			String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-14s|%n";
+			System.out.println("Families");
+			System.out.format("+--------+------------+------------+------------+--------------------+---------+---------------------+--------------+%n");
+			System.out.format("|   ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID |      Wife Name      |   Children   |%n");
+			System.out.format("+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
+			
 			for (Family j : getFamilyList()) {
-				System.out.println(j.getId());
-				System.out.println(j.getMarried());
-				System.out.println(j.getDivorced());
-				System.out.println(j.getHusbandID());
-				System.out.println(j.getHusbandName());
-				System.out.println(j.getWifeId());
-				System.out.println(j.getWifeName());
-				System.out.println(String.join(",", j.getChildren()));
-			}*/
+				System.out.format(familyFormat, j.getId(), j.getMarried(), j.getDivorced(), j.getHusbandID(), j.getHusbandName(), j.getWifeId(), j.getWifeName(), String.join(",", j.getChildren()));
+			}
+		    System.out.format("+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
 
 		} catch (Exception e) {
 			System.out.println(e);
