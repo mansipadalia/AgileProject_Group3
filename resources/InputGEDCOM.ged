@@ -5,7 +5,7 @@
 1 NAME Sophia /Smith/
 1 SEX F
 1 BIRT
-1 DATE 20 FEB 1992
+2 DATE 20 FEB 1992
 1 FAMS F1
 1 FAMC F2
 0 NOTE define John Smith
@@ -17,7 +17,7 @@
 1 FAMS F2
 0 NOTE define Kaylee Jones
 0 I3 INDI
-2 NAME Kaylee /Jones/
+1 NAME Kaylee /Jones/
 1 SEX F
 1 BIRT
 2 DATE 22 APR 1961
