@@ -13,6 +13,7 @@ public class Family {
     private String husbandName;
     private String wifeId;
     private String wifeName;
+    private int linenumber;
     private List<String> children = new ArrayList<String>();
 
     public String getId() {
@@ -66,6 +67,12 @@ public class Family {
 	public List<String> getChildren() {
 		return children;
 	}
+	 public int getLineNumber() {
+         return linenumber;
+     }
+     public void setLineNumber(int linenumber) {
+         this.linenumber = linenumber;
+     }
 	public void setChildren(List<String> children) {
 		this.children = children;
 	}
