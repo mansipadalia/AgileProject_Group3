@@ -17,10 +17,12 @@ import java.util.stream.Collectors;
 import java.lang.*;
 
 
+
 public class Parser {
 
 	private List<Individual> IndividualList;
 	private List<Family> FamilyList;
+	
 
 	public List<Individual> getIndividualList() {
 		return IndividualList;
@@ -39,14 +41,15 @@ public class Parser {
 	}
 
 	public Parser() {
+		
 		File file = new File("resources/InputGEDCOM.ged");
+		int Line = 0;
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
-
 			String st;
 			Set<String> tagNames = init();
 			String tagValidity;
-
+			
 			List<Individual> IList = new ArrayList<Individual>();
 			Individual indi = new Individual();
 
@@ -155,8 +158,13 @@ public class Parser {
 					if(splited[1].equals("CHIL")) {
 						fam.getChildren().add(splited[2]);
 					}
+					
+					indi.setLineNumber(Line);
+					Line++;
+
 
 				}
+				
 			}
 
 			Collections.sort(IList, (i1, i2) -> (i1.getId().compareTo(i2.getId())));
@@ -187,6 +195,9 @@ public class Parser {
 			}
 		    System.out.format("+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
 
+		    
+		    
+		    
 		} catch (Exception e) {
 			System.out.println(e);
 		}

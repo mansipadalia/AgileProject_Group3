@@ -14,6 +14,7 @@ public class Individual {
         private LocalDate death;
         private String child;
         private String spouse;
+        private int linenumber;
 
         public String getId() {
             return id;
@@ -43,6 +44,13 @@ public class Individual {
             this.birthday = birthday;
         }
 
+        public int getLineNumber() {
+            return linenumber;
+        }
+        public void setLineNumber(int linenumber) {
+            this.linenumber = linenumber;
+        }
+        
         public int getAge() {
         	LocalDate endDate = this.death !=null ? this.death : LocalDate.now();
         	return Period.between(birthday, endDate).getYears();
