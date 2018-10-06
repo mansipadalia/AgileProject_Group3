@@ -9,18 +9,12 @@ public class AnomaliesParser {
 		public static void main(String[] args) {
 			Parser p = new Parser();
 			
-			try {
-			for (Individual j :p.getIndividualList()) {
+				for (Individual j :p.getIndividualList()) {
+					if(j.getBirthday().compareTo(j.getDeath())<0) {
+						System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
+					}			
 	    	
-				if(j.getBirthday().compareTo(j.getDeath())<0) {
-			    	 System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
-				}			
-	    	
-		}}
-			catch(Exception e) {
-				
-			}
-		}
-
-		
+				}
+	 	
+		}	
 }
