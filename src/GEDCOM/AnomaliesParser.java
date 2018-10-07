@@ -10,7 +10,6 @@ public class AnomaliesParser {
 			Parser p = new Parser();
        // User Story 03
 				for (Individual j :p.getIndividualList()) {
-<<<<<<< HEAD
 					if(j.getDeath()!= null) {
 						if((j.getBirthday()).compareTo(j.getDeath())>0) {
 							System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
@@ -18,10 +17,5 @@ public class AnomaliesParser {
 					}
 				}
 	    	
-=======
-					if(j.getBirthday().compareTo(j.getDeath())<0) {
-						System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
-					}		
->>>>>>> 01b4ff7935da677db76807aaa843f2c000bbaf1c
-		}	
+		}
 }
