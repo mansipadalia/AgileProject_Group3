@@ -10,11 +10,12 @@ public class AnomaliesParser {
 			Parser p = new Parser();
 			
 				for (Individual j :p.getIndividualList()) {
-					if(j.getBirthday().compareTo(j.getDeath())<0) {
-						System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
-					}			
-	    	
+					if(j.getDeath()!= null) {
+						if((j.getBirthday()).compareTo(j.getDeath())>0) {
+							System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
+						}			
+					}
 				}
-	 	
+	    	
 		}	
 }
