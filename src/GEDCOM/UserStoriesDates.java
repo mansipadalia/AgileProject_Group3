@@ -152,4 +152,74 @@ public class UserStoriesDates {
 			return errors;
 		}
 
+	// US01
+			public static List<String> datesBeforeCurrentDate(Parser p) {
+
+				List<String> errors = new ArrayList<String>();
+				LocalDate currentDate = LocalDate.now();
+
+				for (Individual i : p.getIndividualList()) {
+					LocalDate birthDate = i.getProperty(PropertyType.birthday) != null
+							? (LocalDate) i.getProperty(PropertyType.birthday).getValue()
+							: null;
+
+					LocalDate deathDate = i.getProperty(PropertyType.death) != null
+							? (LocalDate) i.getProperty(PropertyType.death).getValue()
+							: null;
+
+					if (birthDate != null
+							&& ((LocalDate) i.getProperty(PropertyType.birthday).getValue()).isAfter(currentDate)) {
+						errors.add("ERROR: INDIVIDUAL: US01: " + i.getProperty(PropertyType.birthday).getLineNumber() + ": "
+								+ i.getProperty(PropertyType.id).getValue() + " :" + birthDate + ": Birthday occurs in the future" + ".");
+
+					}
+					if (deathDate != null && ((LocalDate) i.getProperty(PropertyType.death).getValue()).isAfter(currentDate)) {
+						errors.add("ERROR: INDIVIDUAL: US01: " + i.getProperty(PropertyType.death).getLineNumber() + ": "
+								+ i.getProperty(PropertyType.id).getValue()  + " :"  + deathDate + ": Death occurs in the future" + ".");
+					}
+				}
+
+				for (Family i : p.getFamilyList()) {
+
+					LocalDate marriedDate = i.getProperty(PropertyType.married) != null
+							? (LocalDate) i.getProperty(PropertyType.married).getValue()
+							: null;
+
+					LocalDate divorcedDate = i.getProperty(PropertyType.divorced) != null
+							? (LocalDate) i.getProperty(PropertyType.divorced).getValue()
+							: null;
+					if (marriedDate != null
+							&& ((LocalDate) i.getProperty(PropertyType.married).getValue()).isAfter(currentDate)) {
+						errors.add("ERROR: INDIVIDUAL: US01: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
+								+ i.getProperty(PropertyType.id).getValue() + " : " + marriedDate
+								+ ": Marriage occurs in the future" + ".");
+					}
+					if (divorcedDate != null
+							&& ((LocalDate) i.getProperty(PropertyType.divorced).getValue()).isAfter(currentDate)) {
+						errors.add("ERROR: INDIVIDUAL: US01: " + i.getProperty(PropertyType.divorced).getLineNumber() + ": "
+								+ i.getProperty(PropertyType.id).getValue() + ": " + divorcedDate + ": Divorced occurs in the future" + ".");
+
+					}
+				}
+
+				return errors;
+			}
+			
+
+			// US07
+			public static List<String> lessThanOneFiftyAge(Parser p) {
+
+				List<String> errors = new ArrayList<String>();
+				
+				for (Individual i : p.getIndividualList()) {
+					LocalDate birthDate = i.getProperty(PropertyType.birthday) != null
+							? (LocalDate) i.getProperty(PropertyType.birthday).getValue()
+							: null;
+					if ((int) i.getProperty(PropertyType.age).getValue() > 150 ){
+						errors.add("ERROR: INDIVIDUAL: US07: " + i.getProperty(PropertyType.birthday).getLineNumber() + ": "
+								+ i.getProperty(PropertyType.id).getValue() + ": More than 150 years old Birth Date" + ":" + birthDate + ".");
+				}
+			}
+				return errors;
+			}
 }
