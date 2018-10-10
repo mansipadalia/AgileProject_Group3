@@ -67,12 +67,14 @@ public class AnomaliesParser {
 		}
 		System.out.format(
 				"+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
-		
+		System.out.println("");
 
 		errors.addAll(UserStoriesDates.birthBeforeMarriage(p));
 		errors.addAll(UserStoriesDates.marriageBeforeDivorce(p));
 		errors.addAll(UserStoriesDates.marriageBeforeDeath(p));
 		errors.addAll(UserStoriesDates.birthBeforeDeath(p));
+		errors.addAll(UserStoriesDates.datesBeforeCurrentDate(p));
+		errors.addAll(UserStoriesDates.lessThanOneFiftyAge(p));
 
 		for (String i : errors) {
 			System.out.println(i);
