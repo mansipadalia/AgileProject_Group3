@@ -27,9 +27,9 @@ public class UserStoriesDates {
 
 			if (((LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue())
 					.isAfter((LocalDate) i.getProperty(PropertyType.married).getValue())) {
-				errors.add("Error US02: At line " + i.getProperty(PropertyType.married).getLineNumber() + ", '"
-						+ husbandID + "' got married at " + (LocalDate) i.getProperty(PropertyType.married).getValue()
-						+ " before birth at " + (LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue()
+				errors.add("ERROR: INDIVIDUAL: US02: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
+						+ husbandID + ": Marriage Date occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
+						+ " before Birth Date " + (LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue()
 						+ ".");
 			}
 
@@ -39,9 +39,9 @@ public class UserStoriesDates {
 
 			if (((LocalDate) res2.get(0).getProperty(PropertyType.birthday).getValue())
 					.isAfter((LocalDate) i.getProperty(PropertyType.married).getValue())) {
-				errors.add("Error US02: At line " + i.getProperty(PropertyType.married).getLineNumber() + ", '"
-						+ wifeID + "' got married at " + (LocalDate) i.getProperty(PropertyType.married).getValue()
-						+ " before birth at " + (LocalDate) res2.get(0).getProperty(PropertyType.birthday).getValue()
+				errors.add("ERROR: INDIVIDUAL: US02: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
+						+ wifeID + ": Marriage Date occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
+						+ " before Birth Date " + (LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue()
 						+ ".");
 			}
 

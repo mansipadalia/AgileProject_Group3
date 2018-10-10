@@ -34,7 +34,7 @@ public class TestDates {
 		Parser p = new Parser(IList, FList);
 		List<String> errors = UserStoriesDates.birthBeforeMarriage(p);
 
-		assertEquals("Error US02: At line 8, 'I01' got married at 1998-10-07 before birth at 2000-06-23.",
+		assertEquals("ERROR: INDIVIDUAL: US02: 8: I01: Marriage Date occurs 1998-10-07 before Birth Date 2000-06-23.",
 				errors.get(0));
 	}
 
