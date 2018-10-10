@@ -14,6 +14,13 @@ public class AnomaliesParser {
 	public static void main(String[] args) {
 		Parser p = new Parser();
 
+		List<String> errors = new ArrayList<String>();
+
+		errors.addAll(UserStoriesDates.birthBeforeMarriage(p));
+		for (String i : errors) {
+			System.out.println(i);
+		}
+
 		/*
 		 * String individualFormat =
 		 * "|%1$-8s|%2$-20s|%3$-8s|%4$-12s|%5$-5s|%6$-7s|%7$-12s|%8$-9s|%9$-9s|%n";
@@ -81,24 +88,6 @@ public class AnomaliesParser {
 		 * );
 		 */
 
-		List<String> errors = new ArrayList<String>();
-		errors.addAll(UserStoriesDates.birthBeforeMarriage(p));
-		for (String i : errors) {
-			System.out.println(i);
-		}
-	}
-
-	// User Story 03
-	public static boolean birthOccursBeforeDeath() {
-//					Parser p = new Parser();
-//					for (Individual j :p.getIndividualList()) {
-//						if(j.getDeath()!= null) {
-//							if((j.getBirthday()).compareTo(j.getDeath())>0) {
-//								System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
-//							}			
-//						}
-//					}
-		return true;
 	}
 
 }
