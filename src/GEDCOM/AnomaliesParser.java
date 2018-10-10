@@ -35,7 +35,8 @@ public class AnomaliesParser {
 					i.getProperty(PropertyType.alive) != null ? i.getProperty(PropertyType.alive).getValue() : null, //
 					i.getProperty(PropertyType.death) != null ? i.getProperty(PropertyType.death).getValue() : null, //
 					i.getProperty(PropertyType.child) != null ? i.getProperty(PropertyType.child).getValue() : null, //
-					i.getProperty(PropertyType.spouse) != null ? i.getProperty(PropertyType.spouse).getValue() : null //
+					i.getProperty(PropertyType.spouse) != null
+						? String.join(",", (List<String>) i.getProperty(PropertyType.spouse).getValue()): null //
 			);
 
 		}

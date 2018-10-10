@@ -41,7 +41,7 @@ public class UserStoriesDates {
 					.isAfter((LocalDate) i.getProperty(PropertyType.married).getValue())) {
 				errors.add("ERROR: INDIVIDUAL: US02: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
 						+ wifeID + ": Marriage Date occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
-						+ " before Birth Date " + (LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue()
+						+ " before Birth Date " + (LocalDate) res2.get(0).getProperty(PropertyType.birthday).getValue()
 						+ ".");
 			}
 

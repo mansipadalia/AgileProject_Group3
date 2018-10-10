@@ -124,9 +124,13 @@ public class Parser {
 					}
 					if (splited[1].equals("FAMC"))
 						individual.setProperty(PropertyType.child, new Property(splited[2], lineNumber));
-					if (splited[1].equals("FAMS"))
-						individual.setProperty(PropertyType.spouse, new Property(splited[2], lineNumber));
-
+					if (splited[1].equals("FAMS")) {
+						if (individual.getProperty(PropertyType.spouse) == null) {
+							Property children = new Property(new ArrayList<>(), lineNumber);
+							individual.setProperty(PropertyType.spouse, children);
+						}
+						((List<String>) individual.getProperty(PropertyType.spouse).getValue()).add(splited[2]);
+					}
 					if (splited[1].equals("MARR"))
 						marriage = true;
 					if (splited[1].equals("DIV"))
