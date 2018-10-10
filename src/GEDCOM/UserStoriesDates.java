@@ -49,19 +49,88 @@ public class UserStoriesDates {
 		return errors;
 	}
 	
+		// US04
+		public static List<String> marriageBeforeDivorce(Parser p) {
 
+			List<String> errors = new ArrayList<String>();
 
-	// User Story 03
-	public static boolean birthOccursBeforeDeath() {
-//					Parser p = new Parser();
-//					for (Individual j :p.getIndividualList()) {
-//						if(j.getDeath()!= null) {
-//							if((j.getBirthday()).compareTo(j.getDeath())>0) {
-//								System.out.println("Error: " + "INDIVIDUAL: " + "US03: " +  j.getLineNumber() + ": " + j.getId() + ": " + "Died " + j.getDeath() + " before born " + j.getBirthday());
-//							}			
-//						}
-//					}
-		return true;
-	}
+			for (Family i : p.getFamilyList()) {
+				String familyID = i.getProperty(PropertyType.id) != null
+						? (String) i.getProperty(PropertyType.id).getValue()
+						: null;
+						
+				LocalDate divorceDate = i.getProperty(PropertyType.divorced) != null
+						? (LocalDate) i.getProperty(PropertyType.divorced).getValue()
+						: null;
 
+				if (divorceDate != null && ((LocalDate) i.getProperty(PropertyType.married).getValue())
+						.isAfter((LocalDate) i.getProperty(PropertyType.divorced).getValue())) {
+					errors.add("ERROR: FAMILY: US04: " + i.getProperty(PropertyType.id).getLineNumber() + ": "
+							+ familyID + ": Divorce " + (LocalDate) i.getProperty(PropertyType.divorced).getValue()
+							+ " occurs before marriage on " + (LocalDate) i.getProperty(PropertyType.married).getValue()
+							+ ".");
+				}
+				
+				if (divorceDate != null && ((LocalDate) i.getProperty(PropertyType.married).getValue())
+						.equals((LocalDate) i.getProperty(PropertyType.divorced).getValue())) {
+					errors.add("ERROR: FAMILY: US04: " + i.getProperty(PropertyType.id).getLineNumber() + ": "
+							+ familyID + ": Divorce " + (LocalDate) i.getProperty(PropertyType.divorced).getValue()
+							+ " occurs before marriage on " + (LocalDate) i.getProperty(PropertyType.married).getValue()
+							+ ".");
+				}
+
+			}
+			return errors;
+		}
+		
+		//US 05
+		public static List<String> marriageBeforeDeath(Parser p) {
+
+			List<String> errors = new ArrayList<String>();
+
+			for (Family i : p.getFamilyList()) {
+				String husbandID = i.getProperty(PropertyType.husbandID) != null
+						? (String) i.getProperty(PropertyType.husbandID).getValue()
+						: null;
+				String wifeID = i.getProperty(PropertyType.wifeID) != null
+						? (String) i.getProperty(PropertyType.wifeID).getValue()
+						: null;
+						
+				String familyID = i.getProperty(PropertyType.id) != null
+						? (String) i.getProperty(PropertyType.id).getValue()
+						: null;
+
+				Predicate<Individual> byHId = x -> x.getProperty(PropertyType.id).getValue().equals(husbandID);
+				List<Individual> res1 = p.getIndividualList().stream().filter(byHId)
+						.collect(Collectors.<Individual>toList());
+				
+				LocalDate HdeathDate = res1.get(0).getProperty(PropertyType.death) != null
+						? (LocalDate) res1.get(0).getProperty(PropertyType.death).getValue()
+						: null;
+				
+				if (HdeathDate != null && ((LocalDate) i.getProperty(PropertyType.married).getValue())
+						.isAfter((LocalDate) res1.get(0).getProperty(PropertyType.death).getValue())) {
+					errors.add("ERROR: FAMILY: US05: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
+							+ familyID + ": Marriage occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
+							+ " after husband's (" + husbandID + ") death on" + HdeathDate + ".");
+				}
+
+				Predicate<Individual> byWId = x -> x.getProperty(PropertyType.id).getValue().equals(wifeID);
+				List<Individual> res2 = p.getIndividualList().stream().filter(byWId)
+						.collect(Collectors.<Individual>toList());
+
+				LocalDate WdeathDate = res2.get(0).getProperty(PropertyType.death) != null
+						? (LocalDate) res2.get(0).getProperty(PropertyType.death).getValue()
+						: null;
+						
+				if (WdeathDate != null && ((LocalDate) i.getProperty(PropertyType.married).getValue())
+						.isAfter((LocalDate) res2.get(0).getProperty(PropertyType.death).getValue())) {
+					errors.add("ERROR: FAMILY: US05: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
+							+ familyID + ": Marriage occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
+							+ " after wife's (" + wifeID + ") death on " + WdeathDate + ".");
+				}
+
+			}
+			return errors;
+		}
 }

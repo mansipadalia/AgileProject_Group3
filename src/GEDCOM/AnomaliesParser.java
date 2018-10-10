@@ -70,6 +70,9 @@ public class AnomaliesParser {
 		
 
 		errors.addAll(UserStoriesDates.birthBeforeMarriage(p));
+		errors.addAll(UserStoriesDates.marriageBeforeDivorce(p));
+		errors.addAll(UserStoriesDates.marriageBeforeDeath(p));
+
 		for (String i : errors) {
 			System.out.println(i);
 		}
