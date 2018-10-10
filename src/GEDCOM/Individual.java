@@ -2,92 +2,48 @@ package GEDCOM;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Individual {
-        private String id;
-        private String name;
-        private String gender;
-        private LocalDate birthday;
-        private int age;
-        private boolean alive;
-        private LocalDate death;
-        private String child;
-        private String spouse;
-        private int linenumber;
 
-        public String getId() {
-            return id;
-        }
-        public void setId(String id) {
-            this.id = id;
-        }
+	private Map<PropertyType, Property> properties = new HashMap<>();
 
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
+	public Map<PropertyType, Property> getProperties() {
+		return properties;
+	}
 
-        public String getGender() {
-            return gender;
-        }
-        public void setGender(String gender) {
-            this.gender = gender;
-        }
+	public void setProperties(Map<PropertyType, Property> properties) {
+		this.properties = properties;
+	}
 
-        public LocalDate getBirthday() {
-            return birthday;
-        }
-        public void setBirthday(LocalDate birthday) {
-            this.birthday = birthday;
-        }
+	public void setProperty(PropertyType type, Property property) {
+		this.properties.put(type, property);	
+	}
 
-        public int getLineNumber() {
-            return linenumber;
-        }
-        public void setLineNumber(int linenumber) {
-            this.linenumber = linenumber;
-        }
-        
-        public int getAge() {
-        	LocalDate endDate = this.death !=null ? this.death : LocalDate.now();
-        	return Period.between(birthday, endDate).getYears();
-        }
-        public void setAge(int age) {
-            this.age = age;
-        }
+	public Property getProperty(PropertyType propertyType) {
+		switch (propertyType) {
+		case alive:
+			Property isAlive = new Property();
+			isAlive.setValue(!this.properties.containsKey(PropertyType.death));
+			return isAlive;
+		case age:
 
-        public boolean isAlive() {
-        	return this.death == null;
-        }
-        public void setAlive(boolean alive) {
-            this.alive = alive;
-        }
+			LocalDate endDate = this.properties.containsKey(PropertyType.death)
+					? (LocalDate) this.properties.get(PropertyType.death).getValue()
+					: LocalDate.now();
+			Property age = new Property();
+			age.setValue(Period.between((LocalDate) this.properties.get(PropertyType.birthday).getValue(), endDate)
+					.getYears());
 
-        public LocalDate getDeath() {
-            return death;
-        }
-        public void setDeath(LocalDate death) {
-            this.death = death;
-        }
+			return age;
+		default:
+			if (this.properties.containsKey(propertyType)) {
+				return this.properties.get(propertyType);
+			}
+		}
 
-        public String getChild() {
-            return child;
-        }
-        public void setChild(String child) {
-            this.child = child;
-        }
+		return null;
+	}
 
-        public String getSpouse() {
-            return spouse;
-        }
-        public void setSpouse(String spouse) {
-            this.spouse = spouse;
-        }
-    }
-
-
-
-	
+}
