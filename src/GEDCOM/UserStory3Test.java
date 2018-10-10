@@ -7,7 +7,7 @@ public class UserStory3Test {
 	@Test
 	public void birthOccursBeforDeath() {
 		AnomaliesParser a= new AnomaliesParser();
-		assertEquals(true,a.birthOccursBeforDeath());
+		assertEquals(true,a.birthOccursBeforeDeath());
 
 	}
 
