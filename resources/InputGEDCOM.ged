@@ -34,11 +34,11 @@
 0 NOTE define Abigail Allen
 0 I05 INDI
 1 NAME Abigail /Allen/
-1 SEX F
-1 BIRT 
-2 DATE 12 MAY 1990
 1 DEAT 
 2 DATE 10 DEC 2016
+1 SEX F
+1 BIRT 
+2 DATE 12 MAY 2017
 1 FAMS F04
 0 NOTE define Ella Moore
 0 I06 INDI
