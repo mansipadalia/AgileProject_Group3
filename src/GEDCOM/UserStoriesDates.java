@@ -28,9 +28,9 @@ public class UserStoriesDates {
 			if (((LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue())
 					.isAfter((LocalDate) i.getProperty(PropertyType.married).getValue())) {
 				errors.add("ERROR: INDIVIDUAL: US02: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
-						+ husbandID + ": Marriage Date occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
-						+ " before Birth Date " + (LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue()
-						+ ".");
+						+ husbandID + ": Marriage Date occurs "
+						+ (LocalDate) i.getProperty(PropertyType.married).getValue() + " before Birth Date "
+						+ (LocalDate) res1.get(0).getProperty(PropertyType.birthday).getValue() + ".");
 			}
 
 			Predicate<Individual> byWId = x -> x.getProperty(PropertyType.id).getValue().equals(wifeID);
@@ -40,15 +40,33 @@ public class UserStoriesDates {
 			if (((LocalDate) res2.get(0).getProperty(PropertyType.birthday).getValue())
 					.isAfter((LocalDate) i.getProperty(PropertyType.married).getValue())) {
 				errors.add("ERROR: INDIVIDUAL: US02: " + i.getProperty(PropertyType.married).getLineNumber() + ": "
-						+ wifeID + ": Marriage Date occurs " + (LocalDate) i.getProperty(PropertyType.married).getValue()
-						+ " before Birth Date " + (LocalDate) res2.get(0).getProperty(PropertyType.birthday).getValue()
-						+ ".");
+						+ wifeID + ": Marriage Date occurs "
+						+ (LocalDate) i.getProperty(PropertyType.married).getValue() + " before Birth Date "
+						+ (LocalDate) res2.get(0).getProperty(PropertyType.birthday).getValue() + ".");
 			}
 
 		}
 		return errors;
 	}
-	
+  
+  // US03
+	public static List<String> birthBeforeDeath(Parser p) {
+
+		List<String> errors = new ArrayList<String>();
+
+		for (Individual i : p.getIndividualList()) {
+			LocalDate deathDate = i.getProperty(PropertyType.death) != null
+					? (LocalDate) i.getProperty(PropertyType.death).getValue()
+					: null;
+			if (deathDate != null && ((LocalDate) i.getProperty(PropertyType.birthday).getValue()).isAfter(deathDate)) {
+				errors.add("ERROR: INDIVIDUAL: US03: " + i.getProperty(PropertyType.death).getLineNumber() + ": "
+						+ i.getProperty(PropertyType.id).getValue() + ": Death Date occurs " + deathDate
+						+ " before Birth Date " + (LocalDate) i.getProperty(PropertyType.birthday).getValue() + ".");
+			}
+		}
+		return errors;
+	}
+
 		// US04
 		public static List<String> marriageBeforeDivorce(Parser p) {
 
