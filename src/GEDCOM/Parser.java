@@ -79,11 +79,13 @@ public class Parser {
 
 				if (tagValidity.equals("Y")) {
 					if (splited[1].equals("INDI") || splited[1].equals("FAM") || splited[1].equals("TRLR")) {
-						if (individual.getProperty(PropertyType.id) != null && individual.getProperty(PropertyType.id).getValue() != null) {
+						if (individual.getProperty(PropertyType.id) != null
+								&& individual.getProperty(PropertyType.id).getValue() != null) {
 							IList.add(individual);
 							individual = new Individual();
 						}
-						if (family.getProperty(PropertyType.id) != null && family.getProperty(PropertyType.id).getValue() != null) {
+						if (family.getProperty(PropertyType.id) != null
+								&& family.getProperty(PropertyType.id).getValue() != null) {
 							FList.add(family);
 							family = new Family();
 						}
@@ -178,7 +180,9 @@ public class Parser {
 
 			setIndividualList(IList);
 			setFamilyList(FList);
-			
+
+		} catch (java.time.DateTimeException de) {
+			System.out.println(de);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
