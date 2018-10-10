@@ -60,5 +60,50 @@ public class TestDates {
 		}
 	}
 	
+	@Test
+	public void testMarriageBeforeDivorce() {
 	
+		List<Family> FList = new ArrayList<Family>();
+
+		Family family = new Family();
+		family.setProperty(PropertyType.id, new Property("F01", 1));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 01, 01), 2));
+		family.setProperty(PropertyType.divorced, new Property(LocalDate.of(2009, 01, 01), 3));
+		FList.add(family);
+
+		Parser p = new Parser(null, FList);
+		List<String> errors = UserStoriesDates.marriageBeforeDivorce(p);
+
+		assertEquals("ERROR: FAMILY: US04: 3: F01: Divorce 2009-01-01 occurs before marriage on 2010-01-01.",
+				errors.get(0));
+	}
+	
+	@Test
+	public void testMarriageBeforeDeath() {
+		
+		List<Individual> IList = new ArrayList<Individual>();
+		List<Family> FList = new ArrayList<Family>();
+		
+		Individual individual = new Individual();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.death, new Property(LocalDate.of(2010, 01, 01), 2));
+		IList.add(individual);
+		individual = new Individual();
+		individual.setProperty(PropertyType.id, new Property("I02", 3));
+		individual.setProperty(PropertyType.death, new Property(LocalDate.of(2011, 01, 01), 4));
+		IList.add(individual);
+
+		Family family = new Family();
+		family.setProperty(PropertyType.id, new Property("F01", 5));
+		family.setProperty(PropertyType.husbandID, new Property("I01", 6));
+		family.setProperty(PropertyType.wifeID, new Property("I02", 7));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2015, 01, 01), 8));
+		FList.add(family);
+
+		Parser p = new Parser(IList, FList);
+		List<String> errors = UserStoriesDates.marriageBeforeDeath(p);
+
+		assertEquals("ERROR: FAMILY: US05: 8: F01: Marriage occurs 2015-01-01 after husband's (I01) death on 2010-01-01.",
+				errors.get(0));
+	}
 }
