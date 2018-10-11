@@ -70,6 +70,15 @@ public class TestDates {
 		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 01, 01), 2));
 		family.setProperty(PropertyType.divorced, new Property(LocalDate.of(2009, 01, 01), 3));
 		FList.add(family);
+		family = new Family();
+		family.setProperty(PropertyType.id, new Property("F02", 4));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2013, 01, 01), 5));
+		family.setProperty(PropertyType.divorced, new Property(LocalDate.of(2015, 01, 01), 6));
+		FList.add(family);
+		family = new Family();
+		family.setProperty(PropertyType.id, new Property("F02", 7));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(1996, 01, 01), 8));
+		FList.add(family);
 
 		Parser p = new Parser(null, FList);
 		List<String> errors = UserStoriesDates.marriageBeforeDivorce(p);
@@ -90,7 +99,6 @@ public class TestDates {
 		IList.add(individual);
 		individual = new Individual();
 		individual.setProperty(PropertyType.id, new Property("I02", 3));
-		individual.setProperty(PropertyType.death, new Property(LocalDate.of(2011, 01, 01), 4));
 		IList.add(individual);
 
 		Family family = new Family();
@@ -107,6 +115,7 @@ public class TestDates {
 				"ERROR: FAMILY: US05: 8: F01: Marriage occurs 2015-01-01 after husband's (I01) death on 2010-01-01.",
 				errors.get(0));
 	}
+
 	@Test
 	public void testBirthBeforeDeath() {
 		List<Individual> IList = new ArrayList<Individual>();
@@ -132,8 +141,29 @@ public class TestDates {
 		assertEquals("ERROR: INDIVIDUAL: US03: 6: I02: Death Date occurs 1880-01-22 before Birth Date 1886-04-12.",
 				errors.get(0));
 	}
+
 	@Test
-	public void testdatesBeforeCurrentDate() {
+	public void testdatesBeforeCurrentDate_1() {
+		List<Individual> IList = new ArrayList<Individual>();
+		List<Family> FList = new ArrayList<Family>();
+
+		Individual individual = new Individual();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1985, 6, 23), 2));
+		IList.add(individual);
+		individual = new Individual();
+		individual.setProperty(PropertyType.id, new Property("I02", 3));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2019, 4, 18), 4));
+		IList.add(individual);
+
+		Parser p = new Parser(IList, FList);
+		List<String> errors = UserStoriesDates.datesBeforeCurrentDate(p);
+
+		assertEquals("ERROR: INDIVIDUAL: US01: 4: I02 : Birthday (2019-04-18) occurs in the future.", errors.get(0));
+	}
+
+	@Test
+	public void testdatesBeforeCurrentDate_2() {
 		List<Individual> IList = new ArrayList<Individual>();
 		List<Family> FList = new ArrayList<Family>();
 
@@ -156,7 +186,7 @@ public class TestDates {
 		Parser p = new Parser(IList, FList);
 		List<String> errors = UserStoriesDates.datesBeforeCurrentDate(p);
 
-		assertEquals("ERROR: INDIVIDUAL: US01: 8: F01 : 2020-10-07: Marriage occurs in the future.", errors.get(0));
+		assertEquals("ERROR: FAMILY: US01: 8: F01 : Marriage (2020-10-07) occurs in the future.", errors.get(0));
 	}
 
 	@Test
@@ -167,10 +197,15 @@ public class TestDates {
 		individual.setProperty(PropertyType.id, new Property("I20", 1));
 		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1800, 01, 01), 2));
 		IList.add(individual);
+		individual = new Individual();
+		individual.setProperty(PropertyType.id, new Property("I21", 3));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1999, 01, 01), 4));
+		IList.add(individual);
 
 		Parser p = new Parser(IList, null);
 		List<String> errors = UserStoriesDates.lessThanOneFiftyAge(p);
 
-		assertEquals("ERROR: INDIVIDUAL: US07: 2: I20: More than 150 years old Birth Date:1800-01-01.", errors.get(0));
+		assertEquals("ERROR: INDIVIDUAL: US07: 2: I20: More than 150 years old, Birth Date (1800-01-01).",
+				errors.get(0));
 	}
 }
