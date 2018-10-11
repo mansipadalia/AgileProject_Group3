@@ -67,7 +67,7 @@ public class TestDates {
 
 		Family family = new Family();
 		family.setProperty(PropertyType.id, new Property("F01", 1));
-		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 01, 01), 2));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2009, 01, 01), 2));
 		family.setProperty(PropertyType.divorced, new Property(LocalDate.of(2009, 01, 01), 3));
 		FList.add(family);
 		family = new Family();
@@ -83,7 +83,7 @@ public class TestDates {
 		Parser p = new Parser(null, FList);
 		List<String> errors = UserStoriesDates.marriageBeforeDivorce(p);
 
-		assertEquals("ERROR: FAMILY: US04: 3: F01: Divorce 2009-01-01 occurs before marriage on 2010-01-01.",
+		assertEquals("ERROR: FAMILY: US04: 3: F01: Divorce 2009-01-01 occurs along with marriage on 2009-01-01.",
 				errors.get(0));
 	}
 
