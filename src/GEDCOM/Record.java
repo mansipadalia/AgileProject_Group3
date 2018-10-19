@@ -5,7 +5,7 @@ import java.time.Period;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Individual {
+public class Record {
 
 	private Map<PropertyType, Property> properties = new HashMap<>();
 
@@ -28,7 +28,9 @@ public class Individual {
 			isAlive.setValue(!this.properties.containsKey(PropertyType.death));
 			return isAlive;
 		case age:
-
+			
+			if(this.properties.get(PropertyType.birthday) == null) return null;
+			
 			LocalDate endDate = this.properties.containsKey(PropertyType.death)
 					? (LocalDate) this.properties.get(PropertyType.death).getValue()
 					: LocalDate.now();

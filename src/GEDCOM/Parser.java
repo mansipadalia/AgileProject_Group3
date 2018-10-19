@@ -15,22 +15,22 @@ import java.util.stream.Collectors;
 
 public class Parser {
 
-	private List<Individual> IndividualList;
-	private List<Family> FamilyList;
+	private List<Record> IndividualList;
+	private List<Record> FamilyList;
 
-	public List<Individual> getIndividualList() {
+	public List<Record> getIndividualList() {
 		return IndividualList;
 	}
 
-	public void setIndividualList(List<Individual> individualList) {
+	public void setIndividualList(List<Record> individualList) {
 		IndividualList = individualList;
 	}
 
-	public List<Family> getFamilyList() {
+	public List<Record> getFamilyList() {
 		return FamilyList;
 	}
 
-	public void setFamilyList(List<Family> familyList) {
+	public void setFamilyList(List<Record> familyList) {
 		FamilyList = familyList;
 	}
 
@@ -46,11 +46,11 @@ public class Parser {
 			Set<String> tagNames = init();
 			String tagValidity;
 
-			List<Individual> IList = new ArrayList<Individual>();
-			Individual individual = new Individual();
+			List<Record> IList = new ArrayList<Record>();
+			Record individual = new Record();
 
-			List<Family> FList = new ArrayList<Family>();
-			Family family = new Family();
+			List<Record> FList = new ArrayList<Record>();
+			Record family = new Record();
 
 			boolean birth = false;
 			boolean death = false;
@@ -82,12 +82,12 @@ public class Parser {
 						if (individual.getProperty(PropertyType.id) != null
 								&& individual.getProperty(PropertyType.id).getValue() != null) {
 							IList.add(individual);
-							individual = new Individual();
+							individual = new Record();
 						}
 						if (family.getProperty(PropertyType.id) != null
 								&& family.getProperty(PropertyType.id).getValue() != null) {
 							FList.add(family);
-							family = new Family();
+							family = new Record();
 						}
 						if (splited[1].equals("INDI")) {
 							individual.setProperty(PropertyType.id, new Property(splited[2], lineNumber));
@@ -152,16 +152,16 @@ public class Parser {
 					}
 					if (splited[1].equals("HUSB")) {
 						family.setProperty(PropertyType.husbandID, new Property(splited[2], lineNumber));
-						Predicate<Individual> byId = p -> p.getProperty(PropertyType.id).getValue().equals(splited[2]);
-						List<Individual> res = IList.stream().filter(byId).collect(Collectors.<Individual>toList());
+						Predicate<Record> byId = p -> p.getProperty(PropertyType.id).getValue().equals(splited[2]);
+						List<Record> res = IList.stream().filter(byId).collect(Collectors.<Record>toList());
 						String husbandName = (String) res.get(0).getProperty(PropertyType.name).getValue();
 						family.setProperty(PropertyType.husbandName, new Property(husbandName, lineNumber));
 					}
 
 					if (splited[1].equals("WIFE")) {
 						family.setProperty(PropertyType.wifeID, new Property(splited[2], lineNumber));
-						Predicate<Individual> byId = p -> p.getProperty(PropertyType.id).getValue().equals(splited[2]);
-						List<Individual> res = IList.stream().filter(byId).collect(Collectors.<Individual>toList());
+						Predicate<Record> byId = p -> p.getProperty(PropertyType.id).getValue().equals(splited[2]);
+						List<Record> res = IList.stream().filter(byId).collect(Collectors.<Record>toList());
 						String wifeName = (String) res.get(0).getProperty(PropertyType.name).getValue();
 						family.setProperty(PropertyType.wifeName, new Property(wifeName, lineNumber));
 					}
@@ -208,7 +208,7 @@ public class Parser {
 		return tagNames;
 	}
 
-	public Parser(List<Individual> IList, List<Family> FList) {
+	public Parser(List<Record> IList, List<Record> FList) {
 		this.IndividualList = IList;
 		this.FamilyList = FList;
 	}
