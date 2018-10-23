@@ -90,6 +90,7 @@ public class Test_MarriageDivorceDates {
 		error.setMessage("Divorce Date 2009-01-01 occurs before Marriage Date 2009-01-01");
 
 		assertEquals(error.toString(), errors.get(0).toString());
+	
 	}
 
 	// US04

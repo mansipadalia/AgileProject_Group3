@@ -29,6 +29,8 @@ public class GEDCOMInfo {
 		errors.addAll(US_BirthDeathDates.birthBeforeDeath(p));
 		errors.addAll(US_GeneralDates.datesBeforeCurrentDate(p));
 		errors.addAll(US_Age.lessThanOneFiftyAge(p));
+		errors.addAll(US_Uniqueness.uniqueNameBirthDate(p));
+		//errors.addAll(US_Uniqueness.uniqueFirstName(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
 
