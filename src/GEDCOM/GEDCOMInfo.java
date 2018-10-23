@@ -17,26 +17,6 @@ public class GEDCOMInfo {
 		displayIndividuals(p);
 		displayFamilies(p);
 		displayErrors(p);
-		List<Record> IList = new ArrayList<Record>();
-		List<Record> FList = new ArrayList<Record>();
-
-		Record family = new Record();
-		family.setProperty(PropertyType.id, new Property("F02", 1));
-		FList.add(family);
-		Record individual = new Record();
-		individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
-		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 3));
-		IList.add(individual);
-		individual = new Record();
-		individual.setProperty(PropertyType.name, new Property("Sophia /Johnson/", 4));
-		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 5));
-		IList.add(individual);
-
-		Parser p1 = new Parser(IList, FList);
-		List<Error> errors = US_Uniqueness.uniqueFirstNameBirthDate(p1);
-		for (Error i : errors) {
-			System.out.println(i.toString());
-		}
 	}
 
 	private static void displayErrors(Parser p) {

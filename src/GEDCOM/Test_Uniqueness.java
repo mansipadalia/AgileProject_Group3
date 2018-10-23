@@ -1,12 +1,10 @@
 package GEDCOM;
 
 import static org.junit.Assert.*;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
-
 import GEDCOM.Error.ErrorType;
 import GEDCOM.Error.RecordType;
 
@@ -109,17 +107,22 @@ public void testuniqueFirstNameBirthDate_error(){
 	List<Record> FList = new ArrayList<Record>();
 
 	Record family = new Record();
-	family.setProperty(PropertyType.id, new Property("F02", 1));
+	family.setProperty(PropertyType.id, new Property("F01", 1));
+	List<String> children = new ArrayList<String>();
+	children.add("I01");
+	children.add("I02");
+	family.setProperty(PropertyType.children, new Property(children, 2));
 	FList.add(family);
 	Record individual = new Record();
-	individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
-	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 3));
-	IList.add(individual);
-	individual = new Record();
-	individual.setProperty(PropertyType.name, new Property("Sophia /Johnson/", 4));
+	individual.setProperty(PropertyType.id, new Property("I01", 3));
+	individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 4));
 	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 5));
 	IList.add(individual);
-
+	individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I02", 6));
+	individual.setProperty(PropertyType.name, new Property("Sophia /Johnson/", 7));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 8));
+	IList.add(individual);
 	Parser p = new Parser(IList, FList);
 	List<Error> errors = US_Uniqueness.uniqueFirstNameBirthDate(p);
 
@@ -128,8 +131,110 @@ public void testuniqueFirstNameBirthDate_error(){
 	error.setRecordType(RecordType.FAMILY);
 	error.setUserStoryNumber("US25");
 	error.setLineNumber(1);
-	error.setId("F02");
+	error.setId("F01");
 	error.setMessage("More than one child in a family have the same first name Sophia and birthday 1992-02-20");
 	assertEquals(error.toString(), errors.get(0).toString());
+	}
+
+public void testuniqueFirstNameBirthDate_Success_1(){
+	
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+
+	Record family = new Record();
+	family.setProperty(PropertyType.id, new Property("F01", 1));
+	List<String> children = new ArrayList<String>();
+	children.add("I01");
+	children.add("I02");
+	family.setProperty(PropertyType.children, new Property(children, 2));
+	FList.add(family);
+	Record individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I01", 3));
+	individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 4));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1996, 03, 22), 5));
+	IList.add(individual);
+	individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I02", 6));
+	individual.setProperty(PropertyType.name, new Property("Johnson /Smith/", 7));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 8));
+	IList.add(individual);
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueFirstNameBirthDate(p);
+
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.FAMILY);
+	error.setUserStoryNumber("US25");
+	error.setLineNumber(1);
+	error.setId("F01");
+	assertEquals(0, errors.size());
+	}
+
+public void testuniqueFirstNameBirthDate_Success_2(){
+	
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+
+	Record family = new Record();
+	family.setProperty(PropertyType.id, new Property("F01", 1));
+	List<String> children = new ArrayList<String>();
+	children.add("I01");
+	children.add("I02");
+	family.setProperty(PropertyType.children, new Property(children, 2));
+	FList.add(family);
+	Record individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I01", 3));
+	individual.setProperty(PropertyType.name, new Property("Johnson /Smith/", 4));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1996, 03, 22), 5));
+	IList.add(individual);
+	individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I02", 6));
+	individual.setProperty(PropertyType.name, new Property("Johnson /Smith/", 7));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 8));
+	IList.add(individual);
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueFirstNameBirthDate(p);
+
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.FAMILY);
+	error.setUserStoryNumber("US25");
+	error.setLineNumber(1);
+	error.setId("F01");
+	assertEquals(0, errors.size());
+	}
+	
+public void testuniqueFirstNameBirthDate_Success_3(){
+	
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+
+	Record family = new Record();
+	family.setProperty(PropertyType.id, new Property("F01", 1));
+	List<String> children = new ArrayList<String>();
+	children.add("I01");
+	children.add("I02");
+	family.setProperty(PropertyType.children, new Property(children, 2));
+	FList.add(family);
+	Record individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I01", 3));
+	individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 4));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 5));
+	IList.add(individual);
+	individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I02", 6));
+	individual.setProperty(PropertyType.name, new Property("Johnson /Smith/", 7));
+	individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 8));
+	IList.add(individual);
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueFirstNameBirthDate(p);
+
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.FAMILY);
+	error.setUserStoryNumber("US25");
+	error.setLineNumber(1);
+	error.setId("F01");
+	assertEquals(0, errors.size());
 	}
 }	
