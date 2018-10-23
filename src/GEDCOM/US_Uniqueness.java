@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-
 import GEDCOM.Error.ErrorType;
 import GEDCOM.Error.RecordType;
 import java.util.HashMap; 
@@ -61,8 +60,7 @@ public class US_Uniqueness {
 										errors.add(error);
 									}
 								}
-							}
-							
+							}	
 				}
 			}
 				
@@ -141,7 +139,6 @@ public class US_Uniqueness {
 			      }
 			}
 			}
-	
 			
 			}
 		
