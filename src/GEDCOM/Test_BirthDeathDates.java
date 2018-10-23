@@ -15,7 +15,7 @@ public class Test_BirthDeathDates {
 
 	// US03
 	@Test
-	public void testBirthBeforeDeath() {
+	public void testBirthBeforeDeathError() {
 		List<Record> IList = new ArrayList<Record>();
 
 		Record individual = new Record();
@@ -45,6 +45,22 @@ public class Test_BirthDeathDates {
 		error.setMessage("Death Date 1880-01-22 occurs before Birth Date 1886-04-12");
 
 		assertEquals(error.toString(),errors.get(0).toString());
+	}
+	
+	// US03
+	public void testBirthBeforeDeathSuccess() {
+
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+		Record individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2000, 6, 23), 2));
+		individual.setProperty(PropertyType.death, new Property(LocalDate.of(2016, 01, 01), 3));
+		IList.add(individual);
+		Parser p = new Parser(IList, FList);
+		List<Error> errors = US_MarriageDivorceDates.marriageBeforeDeath(p);
+
+		assertEquals(0, errors.size());
 	}
 
 }
