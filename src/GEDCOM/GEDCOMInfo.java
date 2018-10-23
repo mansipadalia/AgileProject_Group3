@@ -13,7 +13,7 @@ public class GEDCOMInfo {
 
 	public static void main(String[] args) {
 		Parser p = new Parser();
-		
+
 		displayIndividuals(p);
 		displayFamilies(p);
 		displayErrors(p);
@@ -31,13 +31,15 @@ public class GEDCOMInfo {
 		errors.addAll(US_Age.lessThanOneFiftyAge(p));
 		errors.addAll(US_Uniqueness.uniqueNameBirthDate(p));
 		//errors.addAll(US_Uniqueness.uniqueFirstName(p));
+		errors.addAll(US_Sibling.siblingSpacing(p));
+		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
 
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
 	}
 
-	@SuppressWarnings({ "unchecked"})
+	@SuppressWarnings({ "unchecked" })
 	private static void displayFamilies(Parser p) {
 		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-14s|%n";
 		System.out.println("Families");
