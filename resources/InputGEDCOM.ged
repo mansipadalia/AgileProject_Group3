@@ -2,7 +2,7 @@
 1 SOUR Family Echo
 0 NOTE define John Smith
 0 I02 INDI
-1 NAME Sophia /Smith/
+1 NAME John /Smith/
 1 SEX M
 1 BIRT
 2 DATE 20 FEB 1992
@@ -17,7 +17,7 @@
 1 FAMC F02
 0 NOTE define Kaylee Jones
 0 I03 INDI
-1 NAME Kaylee /Jones/
+1 NAME Sophia /Jones/
 1 SEX F
 1 BIRT
 2 DATE 22 APR 1991
@@ -33,7 +33,7 @@
 1 FAMC F02
 0 NOTE define Abigail Allen
 0 I05 INDI
-1 NAME Abigail /Allen/
+1 NAME Ella /Moore/
 1 DEAT 
 2 DATE 10 DEC 2016
 1 SEX F
@@ -45,7 +45,7 @@
 1 NAME Ella /Moore/
 1 SEX F
 1 BIRT
-2 DATE 13 JUN 1990
+2 DATE 12 MAY 1916
 1 FAMS F03
 0 NOTE define Natalie Smith
 0 I07 INDI
@@ -84,7 +84,7 @@
 1 FAMC F01
 0 NOTE define Jimmy Conners
 0 I12 INDI
-1 NAME Jimmy /Conners/
+1 NAME Steffi /Conners/
 1 DEAT 
 2 DATE 01 JAN 2007
 1 SEX M
@@ -111,7 +111,7 @@
 1 FAMS F06
 0 NOTE define Alex Sampras
 0 I15 INDI
-1 NAME Alex /Sampras/
+1 NAME Sampras /Sampras/
 1 SEX M
 1 BIRT
 2 DATE 01 JAN 2009
@@ -134,7 +134,7 @@
 2 DATE 6 MAR 2000
 1 FAMC F07
 0 I19 INDI
-1 NAME Ted /Jerry/
+1 NAME Alex /Jerry/
 1 BIRT
 2 DATE 7 MAR 2000
 1 FAMC F07
