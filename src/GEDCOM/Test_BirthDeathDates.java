@@ -95,17 +95,17 @@ public class Test_BirthDeathDates {
 
 			Parser p = new Parser(IList, FList);
 			
-			List<Error> errors = US_BirthDeathDates.parentsNotTooOld(p);
+			List<Error> husbanderrors = US_BirthDeathDates.parentsNotTooOld(p);
 
-			Error error = new Error();
-			error.setErrorType(ErrorType.ERROR);
-			error.setRecordType(RecordType.FAMILY);
-			error.setUserStoryNumber("US12");
-			error.setLineNumber(6);
-			error.setId("F01");
-			error.setMessage("Parent (I01) (Birth Date: 1915-01-01) is older than his child (I03) (Birth Date: 2018-01-01).");
+			Error husbandError = new Error();
+			husbandError.setErrorType(ErrorType.ERROR);
+			husbandError.setRecordType(RecordType.FAMILY);
+			husbandError.setUserStoryNumber("US12");
+			husbandError.setLineNumber(6);
+			husbandError.setId("F01");
+			husbandError.setMessage("Parent (I01) (Birth Date: 1915-01-01) is older than his child (I03) (Birth Date: 2018-01-01).");
 
-			assertEquals(error.toString(), errors.get(0).toString());
+			assertEquals(husbandError.toString(), husbanderrors.get(0).toString());
 			
 			individual.setProperty(PropertyType.id, new Property("I04", 11));
 			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2000, 01, 01), 12));
@@ -129,6 +129,37 @@ public class Test_BirthDeathDates {
 			
 			List<Error> validError = US_BirthDeathDates.parentsNotTooOld(p);
 			assertEquals(0, validError.size());
+			
+			individual.setProperty(PropertyType.id, new Property("I07", 21));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I08", 23));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1882, 01, 01), 24));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I09", 25));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1945, 01, 01), 26));
+			IList.add(individual);
+			
+			family.setProperty(PropertyType.id, new Property("F03", 27));
+			List<String> childList = new ArrayList<String>();
+			childList.add("I09");
+			family.setProperty(PropertyType.husbandID, new Property("I07", 28));
+			family.setProperty(PropertyType.wifeID, new Property("I08", 29));
+			family.setProperty(PropertyType.children, new Property(childList, 30));
+			FList.add(family);
+						
+			List<Error> wifeErrors = US_BirthDeathDates.parentsNotTooOld(p);
+
+			Error wifeError = new Error();
+			wifeError.setErrorType(ErrorType.ERROR);
+			wifeError.setRecordType(RecordType.FAMILY);
+			wifeError.setUserStoryNumber("US12");
+			wifeError.setLineNumber(26);
+			wifeError.setId("F03");
+			wifeError.setMessage("Parent (I08) (Birth Date: 1882-01-01) is older than her child (I09) (Birth Date: 1945-01-01).");
+
+			assertEquals(wifeError.toString(), wifeErrors.get(0).toString());
 		}
 	
 	//US12
