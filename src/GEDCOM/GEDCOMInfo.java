@@ -32,6 +32,8 @@ public class GEDCOMInfo {
 		errors.addAll(US_Uniqueness.uniqueFirstNameBirthDate(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
+		errors.addAll(US_MarriageDivorceDates.marriageAfter14(p));
+		errors.addAll(US_BirthDeathDates.parentsNotTooOld(p));
 
 		for (Error i : errors) {
 			System.out.println(i.toString());
@@ -40,14 +42,14 @@ public class GEDCOMInfo {
 
 	@SuppressWarnings({ "unchecked" })
 	private static void displayFamilies(Parser p) {
-		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-14s|%n";
+		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-24s|%n";
 		System.out.println("Families");
 		System.out.format(
-				"+--------+------------+------------+------------+--------------------+---------+---------------------+--------------+%n");
+				"+--------+------------+------------+------------+--------------------+---------+---------------------+------------------------+%n");
 		System.out.format(
-				"|   ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID |      Wife Name      |   Children   |%n");
+				"|   ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID |      Wife Name      |        Children        |%n");
 		System.out.format(
-				"+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
+				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
 
 		for (Record i : p.getFamilyList()) {
 			System.out.format(familyFormat, //
@@ -68,7 +70,7 @@ public class GEDCOMInfo {
 			);
 		}
 		System.out.format(
-				"+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
+				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
 		System.out.println("");
 	}
 

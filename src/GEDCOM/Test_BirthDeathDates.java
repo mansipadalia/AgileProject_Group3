@@ -62,5 +62,124 @@ public class Test_BirthDeathDates {
 
 		assertEquals(0, errors.size());
 	}
+	
+	// US12
+	@Test
+	public void testParentsNotTooOld() {
 
+			List<Record> IList = new ArrayList<Record>();
+			List<Record> FList = new ArrayList<Record>();
+
+			Record individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I01", 1));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1915, 01, 01), 2));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I02", 3));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1960, 01, 01), 4));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I03", 5));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2018, 01, 01), 6));
+			IList.add(individual);
+
+			Record family = new Record();
+			
+			family.setProperty(PropertyType.id, new Property("F01", 7));
+			List<String> children = new ArrayList<String>();
+			children.add("I03");
+			family.setProperty(PropertyType.husbandID, new Property("I01", 8));
+			family.setProperty(PropertyType.wifeID, new Property("I02", 9));
+			family.setProperty(PropertyType.children, new Property(children, 10));
+			FList.add(family);
+
+			Parser p = new Parser(IList, FList);
+			
+			List<Error> errors = US_BirthDeathDates.parentsNotTooOld(p);
+
+			Error error = new Error();
+			error.setErrorType(ErrorType.ERROR);
+			error.setRecordType(RecordType.FAMILY);
+			error.setUserStoryNumber("US12");
+			error.setLineNumber(6);
+			error.setId("F01");
+			error.setMessage("Parent (I01) (Birth Date: 1915-01-01) is older than his child (I03) (Birth Date: 2018-01-01).");
+
+			assertEquals(error.toString(), errors.get(0).toString());
+			
+			individual.setProperty(PropertyType.id, new Property("I04", 11));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2000, 01, 01), 12));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I05", 13));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2001, 01, 01), 14));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I06", 15));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2018, 01, 01), 16));
+			IList.add(individual);
+			
+			family.setProperty(PropertyType.id, new Property("F02", 17));
+			List<String> child = new ArrayList<String>();
+			child.add("I06");
+			family.setProperty(PropertyType.husbandID, new Property("I04", 18));
+			family.setProperty(PropertyType.wifeID, new Property("I05", 19));
+			family.setProperty(PropertyType.children, new Property(child, 20));
+			FList.add(family);
+			
+			List<Error> validError = US_BirthDeathDates.parentsNotTooOld(p);
+			assertEquals(0, validError.size());
+		}
+	
+	//US12
+	@Test
+	public void testParentsNotTooOld_Null() {
+			List<Record> IList = new ArrayList<Record>();
+			List<Record> FList = new ArrayList<Record>();
+			
+			Record individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I01", 3));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I02", 5));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I03", 7));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2018, 01, 01), 8));
+			IList.add(individual);
+			
+			Record family = new Record();
+			family.setProperty(PropertyType.id, new Property("F01", 8));
+			List<String> children = new ArrayList<String>();
+			children.add("I03");
+			family.setProperty(PropertyType.husbandID, new Property("I01", 9));
+			family.setProperty(PropertyType.wifeID, new Property("I02", 10));
+			family.setProperty(PropertyType.children, new Property(children, 11));
+			FList.add(family);
+			
+			Parser p = new Parser(IList, FList);
+			
+			List<Error> errors = US_BirthDeathDates.parentsNotTooOld(p);
+			assertEquals(0, errors.size());
+			
+			individual.setProperty(PropertyType.id, new Property("I04", 13));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I05", 15));
+			IList.add(individual);
+			individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("I06", 17));
+			IList.add(individual);
+			
+			family.setProperty(PropertyType.id, new Property("F02", 18));
+			List<String> child = new ArrayList<String>();
+			child.add("I06");
+			family.setProperty(PropertyType.husbandID, new Property("I04", 19));
+			family.setProperty(PropertyType.wifeID, new Property("I05", 20));
+			family.setProperty(PropertyType.children, new Property(child, 21));
+			FList.add(family);
+						
+			List<Error> nullErrors = US_BirthDeathDates.parentsNotTooOld(p);
+			assertEquals(0, nullErrors.size());
+	}
 }
