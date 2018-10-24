@@ -33,7 +33,10 @@ public class GEDCOMInfo {
 		errors.addAll(US_Uniqueness.uniqueFirstName(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
-
+		errors.addAll(US_ParentChild.birthBeforeMarriageOfParents(p));
+		errors.addAll(US_ParentChild.birthBeforeDeathOfParents(p));
+		
+		
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
