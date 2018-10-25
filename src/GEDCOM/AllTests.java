@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ Test_MarriageDivorceDates.class, Test_BirthDeathDates.class, Test_GeneralDates.class, Test_Age.class,
-		Test_Sibling.class, Test_Miscellaneous.class, Test_Uniqueness.class, Test_Parent.class })
+		Test_Sibling.class, Test_Miscellaneous.class, Test_Uniqueness.class, Test_Parent.class, Test_List.class })
 public class AllTests {
 
 }

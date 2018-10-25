@@ -74,6 +74,7 @@ public class US_Sibling {
 
 		for (Record c : p.getFamilyList()) {
 			if (c.getProperty(PropertyType.children) != null) {
+				@SuppressWarnings("unchecked")
 				Object[] ChildrenIdList = ((List<String>) c.getProperty(PropertyType.children).getValue()).toArray();
 				String[] ChildrenIds = Arrays.copyOf(ChildrenIdList, ChildrenIdList.length, String[].class);
 
