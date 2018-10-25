@@ -35,6 +35,7 @@ public class US_Sibling {
 						List<Record> resi = p.getIndividualList().stream().filter(byiId)
 								.collect(Collectors.<Record>toList());
 						LocalDate bdate_i = (LocalDate) resi.get(0).getProperty(PropertyType.birthday).getValue();
+						
 
 						for (int j = i + 1; j < ChildrenIds.length; j++) {
 
@@ -43,6 +44,7 @@ public class US_Sibling {
 							List<Record> resj = p.getIndividualList().stream().filter(byjId)
 									.collect(Collectors.<Record>toList());
 							LocalDate bdate_j = (LocalDate) resj.get(0).getProperty(PropertyType.birthday).getValue();
+							
 
 							long diffDays = ChronoUnit.DAYS.between(bdate_i, bdate_j);
 

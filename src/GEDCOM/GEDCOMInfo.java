@@ -1,11 +1,7 @@
 package GEDCOM;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
-
 import GEDCOM.Error.ErrorType;
 import GEDCOM.Error.RecordType;
 
@@ -32,9 +28,11 @@ public class GEDCOMInfo {
 		errors.addAll(US_Uniqueness.uniqueFirstNameBirthDate(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
+		errors.addAll(US_ParentChild.birthBeforeMarriageOfParents(p));
+		errors.addAll(US_ParentChild.birthBeforeDeathOfParents(p));
 		errors.addAll(US_MarriageDivorceDates.marriageAfter14(p));
 		errors.addAll(US_BirthDeathDates.parentsNotTooOld(p));
-
+		
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
