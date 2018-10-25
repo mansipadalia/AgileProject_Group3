@@ -1,10 +1,7 @@
 package GEDCOM;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import GEDCOM.Error.ErrorType;
-import GEDCOM.Error.RecordType;
 
 public class GEDCOMInfo {
 
