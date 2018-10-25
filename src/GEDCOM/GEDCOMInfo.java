@@ -17,12 +17,11 @@ public class GEDCOMInfo {
 		displayIndividuals(p);
 		displayFamilies(p);
 		displayErrors(p);
-
 	}
 
 	private static void displayErrors(Parser p) {
 		List<Error> errors = new ArrayList<Error>();
-
+		
 		errors.addAll(US_MarriageDivorceDates.birthBeforeMarriage(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDivorce(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDeath(p));
@@ -30,13 +29,19 @@ public class GEDCOMInfo {
 		errors.addAll(US_GeneralDates.datesBeforeCurrentDate(p));
 		errors.addAll(US_Age.lessThanOneFiftyAge(p));
 		errors.addAll(US_Uniqueness.uniqueNameBirthDate(p));
-		errors.addAll(US_Uniqueness.uniqueFirstName(p));
+		errors.addAll(US_Uniqueness.uniqueFirstNameBirthDate(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
+<<<<<<< HEAD
 		errors.addAll(US_ParentChild.birthBeforeMarriageOfParents(p));
 		errors.addAll(US_ParentChild.birthBeforeDeathOfParents(p));
 		
 		
+=======
+		errors.addAll(US_MarriageDivorceDates.marriageAfter14(p));
+		errors.addAll(US_BirthDeathDates.parentsNotTooOld(p));
+
+>>>>>>> 6abe2d8b7c3e38122456eefc8d0c99106ed1338b
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
@@ -44,14 +49,14 @@ public class GEDCOMInfo {
 
 	@SuppressWarnings({ "unchecked" })
 	private static void displayFamilies(Parser p) {
-		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-14s|%n";
+		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-24s|%n";
 		System.out.println("Families");
 		System.out.format(
-				"+--------+------------+------------+------------+--------------------+---------+---------------------+--------------+%n");
+				"+--------+------------+------------+------------+--------------------+---------+---------------------+------------------------+%n");
 		System.out.format(
-				"|   ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID |      Wife Name      |   Children   |%n");
+				"|   ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID |      Wife Name      |        Children        |%n");
 		System.out.format(
-				"+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
+				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
 
 		for (Record i : p.getFamilyList()) {
 			System.out.format(familyFormat, //
@@ -72,7 +77,7 @@ public class GEDCOMInfo {
 			);
 		}
 		System.out.format(
-				"+--------+----------- +------------+------------+--------------------+---------+---------------------+--------------+%n");
+				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
 		System.out.println("");
 	}
 
