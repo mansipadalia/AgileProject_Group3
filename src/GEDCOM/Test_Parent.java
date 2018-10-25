@@ -1,6 +1,7 @@
 package GEDCOM;
 
 import static org.junit.Assert.*;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +11,9 @@ import org.junit.Test;
 import GEDCOM.Error.ErrorType;
 import GEDCOM.Error.RecordType;
 
-import org.junit.Test;
+public class Test_Parent {
 
-public class Test_ParentChild {
-
-	//US 08
+	// US08
 	@Test
 	public void testBirthBeforeMarriageOfParents_1() {
 		List<Record> IList = new ArrayList<Record>();
@@ -24,7 +23,7 @@ public class Test_ParentChild {
 		individual.setProperty(PropertyType.id, new Property("I01", 1));
 		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 1, 1), 2));
 		IList.add(individual);
-		
+
 		Record family = new Record();
 		family.setProperty(PropertyType.id, new Property("F01", 3));
 		family.setProperty(PropertyType.married, new Property(LocalDate.of(2000, 1, 1), 4));
@@ -34,7 +33,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeMarriageOfParents(p);
+		List<Error> errors = US_Parent.birthBeforeMarriageOfParents(p);
 
 		Error error = new Error();
 		error.setErrorType(ErrorType.ERROR);
@@ -42,7 +41,6 @@ public class Test_ParentChild {
 		error.setUserStoryNumber("US08");
 		error.setLineNumber(4);
 		error.setId("F01");
-		
 		error.setMessage("Difference between birthdate (1992-01-01) and marriage Date (2000-01-01) is not valid");
 
 		assertEquals(error.toString(), errors.get(0).toString());
@@ -68,7 +66,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeMarriageOfParents(p);
+		List<Error> errors = US_Parent.birthBeforeMarriageOfParents(p);
 
 		Error error = new Error();
 		error.setErrorType(ErrorType.ERROR);
@@ -101,7 +99,7 @@ public class Test_ParentChild {
 			FList.add(family);
 
 			Parser p = new Parser(IList, FList);
-			List<Error> errors = US_ParentChild.birthBeforeMarriageOfParents(p);
+			List<Error> errors = US_Parent.birthBeforeMarriageOfParents(p);
 
 			assertEquals(0, errors.size());
 		}
@@ -118,7 +116,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeMarriageOfParents(p);
+		List<Error> errors = US_Parent.birthBeforeMarriageOfParents(p);
 
 		assertEquals(0, errors.size());
 	}
@@ -142,7 +140,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeMarriageOfParents(p);
+		List<Error> errors = US_Parent.birthBeforeMarriageOfParents(p);
 
 		assertEquals(0, errors.size());
 	}
@@ -165,7 +163,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeMarriageOfParents(p);
+		List<Error> errors = US_Parent.birthBeforeMarriageOfParents(p);
 
 		assertEquals(0, errors.size());
 	}
@@ -198,7 +196,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p1 = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeDeathOfParents(p1);
+		List<Error> errors = US_Parent.birthBeforeDeathOfParents(p1);
 
 		Error error = new Error();
 		error.setErrorType(ErrorType.ERROR);
@@ -239,7 +237,7 @@ public class Test_ParentChild {
 		FList.add(family);
 
 		Parser p1 = new Parser(IList, FList);
-		List<Error> errors = US_ParentChild.birthBeforeDeathOfParents(p1);
+		List<Error> errors = US_Parent.birthBeforeDeathOfParents(p1);
 
 		Error error = new Error();
 		error.setErrorType(ErrorType.ERROR);
@@ -279,7 +277,7 @@ public class Test_ParentChild {
 			FList.add(family);
 
 			Parser p1 = new Parser(IList, FList);
-			List<Error> errors = US_ParentChild.birthBeforeDeathOfParents(p1);
+			List<Error> errors = US_Parent.birthBeforeDeathOfParents(p1);
 
 			assertEquals(0, errors.size());
 		}
@@ -303,7 +301,7 @@ public class Test_ParentChild {
 			FList.add(family);
 
 			Parser p1 = new Parser(IList, FList);
-			List<Error> errors = US_ParentChild.birthBeforeDeathOfParents(p1);
+			List<Error> errors = US_Parent.birthBeforeDeathOfParents(p1);
 
 			assertEquals(0, errors.size());
 		}
@@ -319,7 +317,7 @@ public class Test_ParentChild {
 					FList.add(family);
 
 					Parser p1 = new Parser(IList, FList);
-					List<Error> errors = US_ParentChild.birthBeforeDeathOfParents(p1);
+					List<Error> errors = US_Parent.birthBeforeDeathOfParents(p1);
 
 					assertEquals(0, errors.size());
 				}
