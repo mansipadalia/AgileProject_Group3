@@ -28,8 +28,8 @@ public class GEDCOMInfo {
 		errors.addAll(US_Uniqueness.uniqueFirstNameBirthDate(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
-		errors.addAll(US_ParentChild.birthBeforeMarriageOfParents(p));
-		errors.addAll(US_ParentChild.birthBeforeDeathOfParents(p));
+		errors.addAll(US_Parent.birthBeforeMarriageOfParents(p));
+		errors.addAll(US_Parent.birthBeforeDeathOfParents(p));
 		errors.addAll(US_MarriageDivorceDates.marriageAfter14(p));
 		errors.addAll(US_BirthDeathDates.parentsNotTooOld(p));
 		
