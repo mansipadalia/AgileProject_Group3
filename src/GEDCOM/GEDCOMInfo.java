@@ -1,5 +1,6 @@
 package GEDCOM;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import GEDCOM.Error.ErrorType;
@@ -10,9 +11,10 @@ public class GEDCOMInfo {
 	public static void main(String[] args) {
 		Parser p = new Parser();
 
-		displayIndividuals(p);
-		displayFamilies(p);
+		displayIndividuals(p.getIndividualList());
+		displayFamilies(p.getFamilyList());
 		displayErrors(p);
+		
 	}
 
 	private static void displayErrors(Parser p) {
@@ -36,10 +38,16 @@ public class GEDCOMInfo {
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
+		System.out.println("");
+		
+		List<Record> List_US38 = US_List.upcomingBirthdays(p);
+		System.out.println("US38 : List of Upcoming Birthdays");
+		displayIndividuals(List_US38);
+		
 	}
 
 	@SuppressWarnings({ "unchecked" })
-	private static void displayFamilies(Parser p) {
+	private static void displayFamilies(List<Record> family) {
 		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-12s|%5$-20s|%6$-9s|%7$-21s|%8$-24s|%n";
 		System.out.println("Families");
 		System.out.format(
@@ -49,7 +57,7 @@ public class GEDCOMInfo {
 		System.out.format(
 				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
 
-		for (Record i : p.getFamilyList()) {
+		for (Record i : family) {
 			System.out.format(familyFormat, //
 					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
 					i.getProperty(PropertyType.married) != null ? i.getProperty(PropertyType.married).getValue() : null, //
@@ -73,7 +81,7 @@ public class GEDCOMInfo {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static void displayIndividuals(Parser p) {
+	private static void displayIndividuals(List<Record> indi) {
 		String individualFormat = "|%1$-8s|%2$-20s|%3$-8s|%4$-12s|%5$-5s|%6$-7s|%7$-12s|%8$-9s|%9$-9s|%n";
 		System.out.println("Individuals");
 		System.out.format(
@@ -83,7 +91,7 @@ public class GEDCOMInfo {
 		System.out.format(
 				"+--------+--------------------+--------+------------+-----+-------+------------+---------+---------+%n");
 
-		for (Record i : p.getIndividualList()) {
+		for (Record i : indi) {
 			System.out.format(individualFormat, //
 					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
 					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
