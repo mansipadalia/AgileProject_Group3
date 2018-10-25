@@ -32,11 +32,7 @@ public class US_ParentChild {
 			if (i.getProperty(PropertyType.children) != null) {
 			Object[] ChildrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
 			String[] ChildrenIds = Arrays.copyOf(ChildrenIdList, ChildrenIdList.length, String[].class);
-	
-			//System.out.println(ChildrenIds);
-			
-			if (ChildrenIds.length > 1) {
-				
+
 			
 				for (int j = 0; j < ChildrenIds.length - 1; j++) {
 
@@ -44,8 +40,9 @@ public class US_ParentChild {
 					Predicate<Record> byiId = x -> x.getProperty(PropertyType.id).getValue().equals(id_1);
 					List<Record> resi = p.getIndividualList().stream().filter(byiId)
 							.collect(Collectors.<Record>toList());
-					LocalDate bdate_j = (LocalDate) resi.get(0).getProperty(PropertyType.birthday).getValue();
-					
+					LocalDate bdate_j = resi.get(0).getProperty(PropertyType.birthday)!=null
+										? (LocalDate) resi.get(0).getProperty(PropertyType.birthday).getValue()
+										: null;
 				
 						if (marriageDate != null && bdate_j != null
 								&& (marriageDate.isAfter(bdate_j))) {
@@ -62,10 +59,10 @@ public class US_ParentChild {
 						}
 						
 						if (divorceDate != null && bdate_j != null
-								&& (divorceDate.isAfter(bdate_j))) {
+								&& (bdate_j.isAfter(divorceDate))) {
 						long diffMonth = ChronoUnit.DAYS.between(divorceDate, bdate_j);
 
-						if (diffMonth > (8 * 30)) {
+						if (diffMonth > (9 * 30)) {
 							error = new Error();
 							error.setErrorType(ErrorType.ERROR);
 							error.setRecordType(RecordType.FAMILY);
@@ -81,7 +78,7 @@ public class US_ParentChild {
 					}
 				}			
 					
-			}
+		
 		}
 			return errors;
 	}
@@ -93,6 +90,7 @@ public class US_ParentChild {
 
 		List<Error> errors = new ArrayList<Error>();
 		Error error = new Error();
+		LocalDate deathDate_W=null, deathDate_H=null;
 
 		for (Record i : p.getFamilyList()) {
 			
@@ -105,18 +103,27 @@ public class US_ParentChild {
 					? (String) i.getProperty(PropertyType.wifeID).getValue()
 					: null;
 			
-			LocalDate deathDate = i.getProperty(PropertyType.death) != null
-					? (LocalDate) i.getProperty(PropertyType.death).getValue()
-					: null;
-
+				if (husbandID != null) {
 					
+					Predicate<Record> byHId = x -> x.getProperty(PropertyType.id).getValue().equals(husbandID);
+					List<Record> res_h = p.getIndividualList().stream().filter(byHId).collect(Collectors.<Record>toList());
+					deathDate_H = res_h.get(0).getProperty(PropertyType.death) != null
+							? (LocalDate) res_h.get(0).getProperty(PropertyType.death).getValue()
+							: null;
+				}
+			
+				if (wifeID != null) {
+					Predicate<Record> byWId = x -> x.getProperty(PropertyType.id).getValue().equals(wifeID);
+					List<Record> res_w = p.getIndividualList().stream().filter(byWId).collect(Collectors.<Record>toList());
+					deathDate_W = res_w.get(0).getProperty(PropertyType.death) != null
+							? (LocalDate) res_w.get(0).getProperty(PropertyType.death).getValue()
+							: null;
+				}
+		
 			if (i.getProperty(PropertyType.children) != null) {
 			Object[] ChildrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
 			String[] ChildrenIds = Arrays.copyOf(ChildrenIdList, ChildrenIdList.length, String[].class);
-			
-			if (ChildrenIds.length > 1) {
-				
-				
+					
 				for (int j = 0; j < ChildrenIds.length - 1; j++) {
 
 					String id_1 = ChildrenIds[j];
@@ -125,33 +132,33 @@ public class US_ParentChild {
 							.collect(Collectors.<Record>toList());
 					LocalDate bdate_j = (LocalDate) resi.get(0).getProperty(PropertyType.birthday).getValue();
 					
-					if (deathDate != null && bdate_j != null && (deathDate.isBefore(bdate_j))) {
+					if (bdate_j != null && deathDate_W != null && (bdate_j.isAfter(deathDate_W))) {
 
 						error = new Error();
 						error.setErrorType(ErrorType.ERROR);
-						error.setRecordType(RecordType.FAMILY);
+						error.setRecordType(RecordType.INDIVIDUAL);
 						error.setUserStoryNumber("US09");
 						error.setLineNumber(i.getProperty(PropertyType.death).getLineNumber());
-						error.setId(familyID);
-						error.setMessage("Difference between birthdate (" + bdate_j + ") and deathDate of mother ("+ deathDate
-								+ ") is not valid");
+						error.setId(ChildrenIds[j]);
+						error.setMessage("Birth date (" + bdate_j + ") after death of Mother (ID: " + wifeID + ") ("
+								+ deathDate_W + ")");
 						errors.add(error);
 					}
 					
-					if (deathDate != null && bdate_j != null
-							&& (deathDate.isBefore(bdate_j))) {
+					if (bdate_j != null && deathDate_H != null
+							&& (bdate_j.isAfter(deathDate_H))) {
 					
-						long diffMonth = ChronoUnit.DAYS.between(deathDate, bdate_j);
+						long diffMonth = ChronoUnit.DAYS.between(deathDate_H, bdate_j);
 
-					if (diffMonth > (8 * 30)) {
+					if (diffMonth > (9 * 30)) {
 						error = new Error();
 						error.setErrorType(ErrorType.ERROR);
-						error.setRecordType(RecordType.FAMILY);
+						error.setRecordType(RecordType.INDIVIDUAL);
 						error.setUserStoryNumber("US09");
-						error.setLineNumber(i.getProperty(PropertyType.death).getLineNumber());
-						error.setId(id_1);
-						error.setMessage("Difference between birthdate (" + bdate_j + ") and deathDate of father ("+ deathDate 
-									+ ") is not valid");
+						error.setLineNumber(i.getProperty(PropertyType.birthday).getLineNumber());
+						error.setId(ChildrenIds[j]);
+						error.setMessage("Birth date (" + bdate_j + ") after more than 9 months of death of Father (ID: "
+								+ husbandID + ") (" + deathDate_H + ")");
 						errors.add(error);
 					}
 				}
@@ -159,7 +166,6 @@ public class US_ParentChild {
 			}
 		}
 	}
-}
 		return errors;
 }
 		
