@@ -41,6 +41,10 @@ public class GEDCOMInfo {
 		System.out.println("US38 : List of Upcoming Birthdays");
 		displayIndividuals(List_US38);
 		
+		List<Record> List_US29 = US_List.deceased(p);
+		System.out.println("US29 : List of Deceased Individuals");
+		displayIndividuals(List_US29);
+		
 	}
 
 	@SuppressWarnings({ "unchecked" })
