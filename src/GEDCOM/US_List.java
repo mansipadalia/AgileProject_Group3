@@ -29,4 +29,25 @@ public class US_List {
 
 		return individuals;
 	}
+
+	// US29
+	public static List<Record> deceased(Parser p) {
+
+		List<Record> individuals = new ArrayList<Record>();
+
+		for (Record i : p.getIndividualList()) {
+			LocalDate deathDate = i.getProperty(PropertyType.death) != null
+					? (LocalDate) i.getProperty(PropertyType.death).getValue()
+					: null;
+
+			if (deathDate != null && deathDate.isBefore(LocalDate.now())) {
+				individuals.add(i);
+			}
+		}
+
+		return individuals;
+	}
+
+
+
 }
