@@ -79,6 +79,73 @@ public class Test_List {
 
 	// US39
 	@Test
+	public void testUpcomingAnniversaries() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 1));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 11, 18), 2));
+		FList.add(family);
+
+		Parser p = new Parser(IList, FList);
+		List<Record> upcomingAnniversaries = US_List.upcomingAnniversaries(p);
+
+		assertEquals(family, upcomingAnniversaries.get(0));
+	}
+
+	// US39
+	@Test
+	public void testUpcomingAnniversaries_Valid() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 1));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 04, 18), 2));
+		FList.add(family);
+
+		Parser p = new Parser(IList, FList);
+		List<Record> upcomingAnniversaries = US_List.upcomingAnniversaries(p);
+
+		assertEquals(0, upcomingAnniversaries.size());
+	}
+
+	// US39
+	@Test
+	public void testUpcomingAnniversaries_Invalid_BirthDate() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 1));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2020, 04, 18), 2));
+		FList.add(family);
+
+		Parser p = new Parser(IList, FList);
+		List<Record> upcomingAnniversaries = US_List.upcomingAnniversaries(p);
+
+		assertEquals(0, upcomingAnniversaries.size());
+	}
+
+	// US39
+	@Test
+	public void testUpcomingAnniversaries_Null() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 1));
+		FList.add(family);
+
+		Parser p = new Parser(IList, FList);
+		List<Record> upcomingAnniversaries = US_List.upcomingAnniversaries(p);
+
+		assertEquals(0, upcomingAnniversaries.size());
+	}
+
+	// US29
+	@Test
 	public void testdeceased() {
 		List<Record> IList = new ArrayList<Record>();
 		List<Record> FList = new ArrayList<Record>();
@@ -94,7 +161,7 @@ public class Test_List {
 		assertEquals(individual, deceased.get(0));
 	}
 
-	// US39
+	// US29
 	@Test
 	public void testdeceased_Valid() {
 		List<Record> IList = new ArrayList<Record>();
@@ -110,7 +177,7 @@ public class Test_List {
 		assertEquals(0, deceased.size());
 	}
 
-	// US39
+	// US29
 	@Test
 	public void testdeceased_Invalid_DeathDate() {
 		List<Record> IList = new ArrayList<Record>();
