@@ -194,4 +194,43 @@ public class Test_List {
 		assertEquals(0, deceased.size());
 	}
 
+	// US30
+	@Test
+	public void testLivingMarried() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1980, 01, 01), 3));
+		IList.add(individual);
+		individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I02", 4));
+		individual.setProperty(PropertyType.name, new Property("Eric /Johnson/", 5));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1980, 01, 01), 6));
+		individual.setProperty(PropertyType.death, new Property(LocalDate.of(2015, 01, 01), 7));
+		IList.add(individual);
+
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 8));
+		family.setProperty(PropertyType.wifeID, new Property("I01", 9));
+		family.setProperty(PropertyType.husbandID, new Property("I02", 10));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 03, 10), 11));
+		FList.add(family);
+
+		Parser p = new Parser(IList, FList);
+		List<Record> livingMarried = US_List.livingMarried(p);
+
+		Record record = new Record();
+		record.setProperty(PropertyType.id, new Property("I01", 0));
+		record.setProperty(PropertyType.name, new Property("Sophia /Smith/", 0));
+		record.setProperty(PropertyType.birthday, new Property(LocalDate.of(1980, 01, 01), 0));
+		record.setProperty(PropertyType.death, new Property(null, 0));
+		record.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 03, 10), 0));
+		record.setProperty(PropertyType.divorced, new Property(null, 0));
+
+		assertEquals(true, record.recordEquals(livingMarried.get(0)));
+	}
+
 }

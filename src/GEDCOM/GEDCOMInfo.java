@@ -11,12 +11,12 @@ public class GEDCOMInfo {
 		displayIndividuals(p.getIndividualList());
 		displayFamilies(p.getFamilyList());
 		displayErrors(p);
-		
+
 	}
 
 	private static void displayErrors(Parser p) {
 		List<Error> errors = new ArrayList<Error>();
-		
+
 		errors.addAll(US_MarriageDivorceDates.birthBeforeMarriage(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDivorce(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDeath(p));
@@ -31,25 +31,29 @@ public class GEDCOMInfo {
 		errors.addAll(US_Parent.birthBeforeDeathOfParents(p));
 		errors.addAll(US_MarriageDivorceDates.marriageAfter14(p));
 		errors.addAll(US_BirthDeathDates.parentsNotTooOld(p));
-		
+
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
 		System.out.println("");
-		
-		//Display List User Stories
+
+		// Display List User Stories
 		List<Record> List_US38 = US_List.upcomingBirthdays(p);
 		System.out.println("US38 : List of Upcoming Birthdays");
 		displayIndividuals(List_US38);
-		
+
 		List<Record> List_US39 = US_List.upcomingAnniversaries(p);
 		System.out.println("US39 : List of Upcoming Anniversaries");
 		displayFamilies(List_US39);
-		
+
 		List<Record> List_US29 = US_List.deceased(p);
 		System.out.println("US29 : List of Deceased Individuals");
 		displayIndividuals(List_US29);
-		
+
+		List<Record> List_US30 = US_List.livingMarried(p);
+		System.out.println("US30 : List of Living Married Individuals");
+		displayLivingMarried(List_US30);
+
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -116,6 +120,29 @@ public class GEDCOMInfo {
 		}
 		System.out.format(
 				"+--------+--------------------+--------+------------+-----+-------+------------+---------+---------+%n");
+		System.out.println("");
+	}
+
+	private static void displayLivingMarried(List<Record> records) {
+		String familyFormat = "|%1$-8s|%2$-20s|%3$-12s|%4$-12s|%5$-12s|%6$-12s|%n";
+		System.out.println("Families");
+		System.out.format("+--------+--------------------+------------+------------+------------+------------+%n");
+		System.out.format("|   ID   |        Name        |  Birthday  |    Death   |  Married   |  Divorced  |%n");
+		System.out.format("+--------+--------------------+------------+------------+------------+------------+%n");
+
+		for (Record i : records) {
+			System.out.format(familyFormat, //
+					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
+					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
+					i.getProperty(PropertyType.birthday) != null ? i.getProperty(PropertyType.birthday).getValue()
+							: null, //
+					i.getProperty(PropertyType.death) != null ? i.getProperty(PropertyType.death).getValue() : null, //
+					i.getProperty(PropertyType.married) != null ? i.getProperty(PropertyType.married).getValue() : null, //
+					i.getProperty(PropertyType.divorced) != null ? i.getProperty(PropertyType.divorced).getValue()
+							: null //
+			);
+		}
+		System.out.format("+--------+--------------------+------------+------------+------------+------------+%n");
 		System.out.println("");
 	}
 
