@@ -3,7 +3,10 @@ package GEDCOM;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class US_List {
 
@@ -60,6 +63,54 @@ public class US_List {
 			}
 		}
 		return individuals;
+	}
+
+	// US30
+	public static List<Record> livingMarried(Parser p) {
+		List<Record> records = new ArrayList<Record>();
+		for (Record i : p.getFamilyList()) {
+			LocalDate marriageDate = i.getProperty(PropertyType.married) != null
+					? (LocalDate) i.getProperty(PropertyType.married).getValue()
+					: null;
+			LocalDate divorcedDate = i.getProperty(PropertyType.divorced) != null
+					? (LocalDate) i.getProperty(PropertyType.divorced).getValue()
+					: null;
+
+			String husbandID = i.getProperty(PropertyType.husbandID) != null
+					? (String) i.getProperty(PropertyType.husbandID).getValue()
+					: null;
+			String wifeID = i.getProperty(PropertyType.wifeID) != null
+					? (String) i.getProperty(PropertyType.wifeID).getValue()
+					: null;
+
+			String[] IDs = new String[] { husbandID, wifeID };
+
+			for (String id : IDs) {
+
+				Predicate<Record> byId = x -> x.getProperty(PropertyType.id).getValue().equals(id);
+				List<Record> res = p.getIndividualList().stream().filter(byId).collect(Collectors.<Record>toList());
+				LocalDate birthDate = res.get(0).getProperty(PropertyType.birthday) != null
+						? (LocalDate) res.get(0).getProperty(PropertyType.birthday).getValue()
+						: null;
+				LocalDate deathDate = res.get(0).getProperty(PropertyType.death) != null
+						? (LocalDate) res.get(0).getProperty(PropertyType.death).getValue()
+						: null;
+
+				if (divorcedDate == null && deathDate == null && birthDate != null && marriageDate != null) {
+					Record record = new Record();
+					record.setProperty(PropertyType.id, new Property(id, 0));
+					record.setProperty(PropertyType.name, new Property(res.get(0).getProperty(PropertyType.name).getValue(), 0));
+					record.setProperty(PropertyType.birthday, new Property(birthDate, 0));
+					record.setProperty(PropertyType.death, new Property(deathDate, 0));
+					record.setProperty(PropertyType.married, new Property(marriageDate, 0));
+					record.setProperty(PropertyType.divorced, new Property(divorcedDate, 0));
+					records.add(record);
+				}
+			}
+		}
+		Collections.sort(records, (i1, i2) -> (((String) i1.getProperty(PropertyType.id).getValue())
+				.compareTo((String) i2.getProperty(PropertyType.id).getValue())));
+		return records;
 	}
 
 }
