@@ -37,9 +37,14 @@ public class GEDCOMInfo {
 		}
 		System.out.println("");
 		
+		//Display List User Stories
 		List<Record> List_US38 = US_List.upcomingBirthdays(p);
 		System.out.println("US38 : List of Upcoming Birthdays");
 		displayIndividuals(List_US38);
+		
+		List<Record> List_US39 = US_List.upcomingAnniversaries(p);
+		System.out.println("US39 : List of Upcoming Anniversaries");
+		displayFamilies(List_US39);
 		
 		List<Record> List_US29 = US_List.deceased(p);
 		System.out.println("US29 : List of Deceased Individuals");
@@ -56,7 +61,7 @@ public class GEDCOMInfo {
 		System.out.format(
 				"|   ID   |  Married   |  Divorced  | Husband ID |    Husband Name    | Wife ID |      Wife Name      |        Children        |%n");
 		System.out.format(
-				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
+				"+--------+------------+------------+------------+--------------------+---------+---------------------+------------------------+%n");
 
 		for (Record i : family) {
 			System.out.format(familyFormat, //
@@ -77,7 +82,7 @@ public class GEDCOMInfo {
 			);
 		}
 		System.out.format(
-				"+--------+----------- +------------+------------+--------------------+---------+---------------------+------------------------+%n");
+				"+--------+------------+------------+------------+--------------------+---------+---------------------+------------------------+%n");
 		System.out.println("");
 	}
 
@@ -111,6 +116,7 @@ public class GEDCOMInfo {
 		}
 		System.out.format(
 				"+--------+--------------------+--------+------------+-----+-------+------------+---------+---------+%n");
+		System.out.println("");
 	}
 
 }
