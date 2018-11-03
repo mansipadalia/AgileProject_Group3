@@ -126,4 +126,35 @@ public class US_Sibling {
 
 		return errors;
 	}
+	
+	// US15
+	public static List<Error> fewerThanFifteenSiblings(Parser p) {
+		
+		List<Error> errors = new ArrayList<Error>();
+		Error error = new Error();
+		
+		for (Record f: p.getFamilyList()) {
+			
+			if (f.getProperty(PropertyType.children) != null) {
+				@SuppressWarnings("unchecked")
+				Object[] ChildrenList = ((List<String>) f.getProperty(PropertyType.children).getValue()).toArray();
+				String[] ChildrenId = Arrays.copyOf(ChildrenList, ChildrenList.length, String[].class);
+				
+				int totalChildren = ChildrenId.length;
+				
+				if (totalChildren > 15) {
+					error = new Error();
+					error.setErrorType(ErrorType.ERROR);
+					error.setRecordType(RecordType.FAMILY);
+					error.setUserStoryNumber("US15");
+					error.setLineNumber(f.getProperty(PropertyType.id).getLineNumber());
+					error.setId((String) f.getProperty(PropertyType.id).getValue());
+					error.setMessage("Family (" + f.getProperty(PropertyType.id).getValue() + ") has more than 15 siblings (Children IDs: " 
+							+ f.getProperty(PropertyType.children).getValue()  + ").");
+					errors.add(error);
+				}
+			}
+		}	
+		return errors;	
+	}
 }
