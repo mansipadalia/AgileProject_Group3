@@ -1,12 +1,5 @@
 0 NOTE GitHub Repository - mansipadalia/AgileProject_Group3
 1 SOUR Family Echo
-0 NOTE define John Smith
-0 I02 INDI
-1 NAME John /Smith/
-1 SEX M
-1 BIRT
-2 DATE 20 FEB 1992
-1 FAMS F02
 0 NOTE define Sophia Smith
 0 I01 INDI
 1 NAME Sophia /Smith/
@@ -15,6 +8,13 @@
 2 DATE 20 FEB 1992
 1 FAMS F01
 1 FAMC F02
+0 NOTE define John Smith
+0 I02 INDI
+1 NAME John /Smith/
+1 SEX M
+1 BIRT
+2 DATE 20 FEB 1992
+1 FAMS F02
 0 NOTE define Kaylee Jones
 0 I03 INDI
 1 NAME Sophia /Jones/
@@ -24,7 +24,7 @@
 1 FAMS F02
 0 NOTE define Jacob Smith
 0 I04 INDI
-1 NAME susan /Smith/
+1 NAME Jacob /Smith/
 1 SEX M
 1 BIRT
 2 DATE 20 FEB 1992
@@ -104,6 +104,7 @@
 0 NOTE define Pete Sampras
 0 I14 INDI
 1 NAME Pete /Sampras/
+1 SEX M
 1 DEAT 
 2 DATE 01 JAN 2010
 1 BIRT
@@ -119,52 +120,67 @@
 0 NOTE define Jen Lucas
 0 I16 INDI
 1 NAME Jen /Lucas/
+1 SEX F
 1 BIRT
 2 DATE 16 JAN 2010
 1 FAMS F07
 0 NOTE define Ben Jerry
 0 I17 INDI
 1 NAME Ben /Jerry/
+1 SEX M
 1 BIRT
 2 DATE 6 MAR 2000
 1 FAMC F07
+0 NOTE define Alex Jerry
 0 I18 INDI
 1 NAME Alex /Jerry/
 1 BIRT
+1 SEX F
 2 DATE 6 MAR 2000
 1 FAMC F07
+0 NOTE define Alex Jerry
 0 I19 INDI
 1 NAME Alex /Jerry/
+1 SEX F
 1 BIRT
 2 DATE 7 MAR 2000
 1 FAMC F07
+0 NOTE define Marshall Jerry
 0 I20 INDI
 1 NAME Marshall /Jerry/
+1 SEX M
 1 BIRT
 2 DATE 6 MAR 2000
 1 FAMC F07
+0 NOTE define Lily Jerry
 0 I21 INDI
 1 NAME Lily /Jerry/
+1 SEX F
 1 BIRT
 2 DATE 7 MAR 2000
 1 FAMC F07
+0 NOTE define Robin Jerry
 0 I22 INDI
 1 NAME Robin /Jerry/
+1 SEX M
 1 BIRT
 2 DATE 6 MAR 2000
 1 FAMC F07
+0 NOTE define Simon Jones
 0 I23 INDI
 1 NAME Simon /Jones/
 1 SEX M
 1 BIRT
 2 DATE 28 NOV 1915
 1 FAMS F08
+0 NOTE define Emma Jones
 0 I24 INDI
 1 NAME Emma /Jones/
 1 SEX F
 1 BIRT
 2 DATE 16 JUN 1920
 1 FAMS F08
+0 NOTE define Dough Jones
 0 I25 INDI
 1 NAME Doug /Jones/
 1 SEX M
@@ -178,6 +194,111 @@
 1 BIRT
 2 DATE 6 JAN 2017
 1 FAMC F04
+0 NOTE define Albert Jones
+0 I27 INDI
+1 NAME Albert /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 JUN 1941
+1 FAMC F08
+0 NOTE define Brittany Jones
+0 I28 INDI
+1 NAME Brittany /Jones/
+1 SEX F
+1 BIRT
+2 DATE 6 JUL 1941
+1 FAMC F08
+0 NOTE define Catherine Jones
+0 I29 INDI
+1 NAME Catherine /Jones/
+1 SEX F
+1 BIRT
+2 DATE 6 AUG 1943
+1 FAMC F08
+0 NOTE define Elsa Jones
+0 I30 INDI
+1 NAME Elsa /Jones/
+1 SEX F
+1 BIRT
+2 DATE 6 SEP 1943
+1 FAMC F08
+0 NOTE define Frey Jones
+0 I31 INDI
+1 NAME Frey /Jones/
+1 SEX F
+1 BIRT
+2 DATE 6 OCT 1946
+1 FAMC F08
+0 NOTE define Gary Jones
+0 I32 INDI
+1 NAME Gary /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1946
+1 FAMC F08
+0 NOTE define Hyacinth Jones
+0 I33 INDI
+1 NAME Hyacinth /Jones/
+1 SEX F
+1 BIRT
+2 DATE 6 AUG 1949
+1 FAMC F08
+0 NOTE define Irvine Jones
+0 I34 INDI
+1 NAME Irvine /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1949
+1 FAMC F08
+0 NOTE define James Jones
+0 I35 INDI
+1 NAME James /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1951
+1 FAMC F08
+0 NOTE define Kay Jones
+0 I36 INDI
+1 NAME Kay /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1951
+1 FAMC F08
+0 NOTE define Logan Jones
+0 I37 INDI
+1 NAME Logan /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1955
+1 FAMC F08
+0 NOTE define Mac Jones
+0 I38 INDI
+1 NAME Mac /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1955
+1 FAMC F08
+0 NOTE define Nick Jones
+0 I39 INDI
+1 NAME Nick /Jones/
+1 SEX M
+1 BIRT
+2 DATE 6 AUG 1960
+1 FAMC F08
+0 NOTE define Opra Jones
+0 I40 INDI
+1 NAME Opra /Jones/
+1 SEX F
+1 BIRT
+2 DATE 7 AUG 1960
+1 FAMC F08
+0 NOTE define Patrick Jones
+0 I41 INDI
+1 NAME Patrick /Jones/
+1 SEX M
+1 BIRT
+2 DATE 8 AUG 1960
+1 FAMC F08
 0 F01 FAM
 1 MARR
 2 DATE 29 NOV 2016
@@ -238,9 +359,24 @@
 1 CHIL I22
 0 F08 FAM
 1 MARR
-2 DATE 01 JAN 1980
+2 DATE 01 JAN 1940
 1 HUSB I23
 1 WIFE I24
 1 CHIL I25
+1 CHIL I27
+1 CHIL I28
+1 CHIL I29
+1 CHIL I30
+1 CHIL I31
+1 CHIL I32
+1 CHIL I33
+1 CHIL I34
+1 CHIL I35
+1 CHIL I36
+1 CHIL I37
+1 CHIL I38
+1 CHIL I39
+1 CHIL I40
+1 CHIL I41
 1 _CURRENT Y
 0 TRLR
