@@ -59,7 +59,6 @@ public class GEDCOMInfo {
 		List<Record> List_US28 = US_List.orderSiblingsByAge(p);
 		System.out.println("US28 : List of Siblings By Age");
 		displaySiblingsByage(List_US28);
-		
 
 	}
 
