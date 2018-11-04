@@ -3,6 +3,7 @@ package GEDCOM;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
@@ -112,5 +113,39 @@ public class US_List {
 				.compareTo((String) i2.getProperty(PropertyType.id).getValue())));
 		return records;
 	}
+	//US 28
+	public static List<Record> orderSiblingsByAge(Parser p){
+			
+		List<Record> records = new ArrayList<Record>();
+					
+			for (Record i : p.getFamilyList()) {
+				
+				//int flag = 0;
+				
+				ArrayList<String>  childrenNames = new ArrayList<String> ();
+				ArrayList<LocalDate>  birthDays = new ArrayList<LocalDate> ();
+				//HashMap<String, LocalDate> display = new HashMap<>(); 
 
+				if (i.getProperty(PropertyType.children) != null) {
+				Object[] childrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
+				String[] childrenIds = Arrays.copyOf(childrenIdList, childrenIdList.length, String[].class);
+
+					 
+				for (int a = 0; a < childrenIds.length; a++) {
+
+				String id_1 = childrenIds[a];
+				Predicate<Record> byiId = x -> x.getProperty(PropertyType.id).getValue().equals(id_1);
+				List<Record> resi = p.getIndividualList().stream().filter(byiId)
+				.collect(Collectors.<Record>toList());
+				
+				String childName = (String) resi.get(0).getProperty(PropertyType.name).getValue();
+				childrenNames.add(childName);
+				
+				LocalDate childBD = (LocalDate) resi.get(0).getProperty(PropertyType.birthday).getValue();
+				birthDays.add(childBD);			
+				}
+				}
+			}
+			return records;
+	}
 }
