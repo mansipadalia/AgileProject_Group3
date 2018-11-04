@@ -113,39 +113,57 @@ public class US_List {
 				.compareTo((String) i2.getProperty(PropertyType.id).getValue())));
 		return records;
 	}
+	
 	//US 28
 	public static List<Record> orderSiblingsByAge(Parser p){
-			
 		List<Record> records = new ArrayList<Record>();
+
+		for (Record i : p.getFamilyList()) {
+
+			if (i.getProperty(PropertyType.children) != null) {
+			Object[] childrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
+			String[] childrenIds = Arrays.copyOf(childrenIdList, childrenIdList.length, String[].class);
+			
+			String familyId = i.getProperty(PropertyType.id) != null
+					? (String) i.getProperty(PropertyType.id).getValue()
+					: null;
 					
-			for (Record i : p.getFamilyList()) {
-				
-				//int flag = 0;
-				
-				ArrayList<String>  childrenNames = new ArrayList<String> ();
-				ArrayList<LocalDate>  birthDays = new ArrayList<LocalDate> ();
-				//HashMap<String, LocalDate> display = new HashMap<>(); 
+			for (String id : childrenIds) {
 
-				if (i.getProperty(PropertyType.children) != null) {
-				Object[] childrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
-				String[] childrenIds = Arrays.copyOf(childrenIdList, childrenIdList.length, String[].class);
+				Predicate<Record> byId = x -> x.getProperty(PropertyType.id).getValue().equals(id);
+				List<Record> res = p.getIndividualList().stream().filter(byId).collect(Collectors.<Record>toList());
+				String name = res.get(0).getProperty(PropertyType.name) != null
+						? (String) res.get(0).getProperty(PropertyType.name).getValue()
+						: null;
+				String gender = res.get(0).getProperty(PropertyType.gender) != null
+						? (String) res.get(0).getProperty(PropertyType.gender).getValue()
+						: null;
+				LocalDate birthdate = res.get(0).getProperty(PropertyType.birthday) != null
+						? (LocalDate) res.get(0).getProperty(PropertyType.birthday).getValue()
+						: null;
+				int age = res.get(0).getProperty(PropertyType.age) != null
+						? (int) res.get(0).getProperty(PropertyType.age).getValue()
+						: null;
 
-					 
-				for (int a = 0; a < childrenIds.length; a++) {
-
-				String id_1 = childrenIds[a];
-				Predicate<Record> byiId = x -> x.getProperty(PropertyType.id).getValue().equals(id_1);
-				List<Record> resi = p.getIndividualList().stream().filter(byiId)
-				.collect(Collectors.<Record>toList());
-				
-				String childName = (String) resi.get(0).getProperty(PropertyType.name).getValue();
-				childrenNames.add(childName);
-				
-				LocalDate childBD = (LocalDate) resi.get(0).getProperty(PropertyType.birthday).getValue();
-				birthDays.add(childBD);			
-				}
-				}
+							Record record = new Record();
+							record.setProperty(PropertyType.child, new Property(familyId, 0));
+							record.setProperty(PropertyType.id, new Property(id, 0));
+							record.setProperty(PropertyType.name, new Property(name, 0));
+							record.setProperty(PropertyType.gender, new Property(gender, 0));
+							record.setProperty(PropertyType.birthday, new Property(birthdate, 0));
+							record.setProperty(PropertyType.age, new Property(age, 0));
+							records.add(record);		
 			}
-			return records;
-	}
+			
+			}	
+					Collections.sort(records, (i1, i2) -> ( ((String) i1.getProperty(PropertyType.child).getValue())
+							.compareTo((String) i2.getProperty(PropertyType.child).getValue()) + ((Integer) i1.getProperty(PropertyType.age).getValue())
+					.compareTo((Integer) i2.getProperty(PropertyType.age).getValue())));
+
+					
+		}
+	
+		return records;
+
+}
 }

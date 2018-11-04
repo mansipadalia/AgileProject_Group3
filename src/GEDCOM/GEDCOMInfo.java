@@ -1,5 +1,6 @@
 package GEDCOM;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,54 @@ public class GEDCOMInfo {
 		List<Record> List_US30 = US_List.livingMarried(p);
 		System.out.println("US30 : List of Living Married Individuals");
 		displayLivingMarried(List_US30);
+		
+		List<Record> List_US28 = US_List.orderSiblingsByAge(p);
+		System.out.println("US28 : List of Siblings By Age");
+		displaySiblingsByage(List_US28);
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
 
+		Record individual1 = new Record();
+		individual1.setProperty(PropertyType.id, new Property("I01", 1));
+		individual1.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
+		individual1.setProperty(PropertyType.gender, new Property("F", 3));
+		individual1.setProperty(PropertyType.birthday, new Property(LocalDate.of(1993,02,20), 4));
+		
+		IList.add(individual1);
+		Record individual2 = new Record();
+		individual2.setProperty(PropertyType.id, new Property("I02", 5));
+		individual2.setProperty(PropertyType.name, new Property("Jacob /Smith/", 6));
+		individual2.setProperty(PropertyType.gender, new Property("M", 7));
+		individual2.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992, 02, 20), 8));
+		
+		IList.add(individual2);
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 9));
+		List<String> children = new ArrayList<String>();
+		children.add("I01");
+		children.add("I02");
+		family.setProperty(PropertyType.children, new Property(children, 10));
+		FList.add(family);
+		Parser p1 = new Parser(IList, FList);
+		List<Record> siblings = US_List.orderSiblingsByAge(p1);
+		Record record1 = new Record();
+		record1.setProperty(PropertyType.child, new Property("F01", 0));
+		record1.setProperty(PropertyType.id, new Property("I01", 0));
+		record1.setProperty(PropertyType.name, new Property("Sophia /Smith/", 0));
+		record1.setProperty(PropertyType.gender, new Property("F", 0));
+		record1.setProperty(PropertyType.birthday, new Property(LocalDate.of(1993,02,20), 0));
+		record1.setProperty(PropertyType.age, new Property(25, 0));
+		
+		Record record2 = new Record();
+		record2.setProperty(PropertyType.child, new Property("F01", 0));
+		record2.setProperty(PropertyType.id, new Property("I02", 0));
+		record2.setProperty(PropertyType.name, new Property("Jacob /Smith/", 0));
+		record2.setProperty(PropertyType.gender, new Property("M", 0));
+		record2.setProperty(PropertyType.birthday, new Property(LocalDate.of(1992,02,20), 0));
+		record2.setProperty(PropertyType.age, new Property(26, 0));
+		if (record1.recordEquals(siblings.get(1))) {
+			System.out.println("true");
+		}
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -148,4 +196,27 @@ public class GEDCOMInfo {
 		System.out.println("");
 	}
 
+	private static void displaySiblingsByage(List<Record> records) {
+		String familyFormat = "|%1$-8s|%2$-8s|%3$-20s|%4$-12s|%5$-12s|%6$-12s|%n";
+		System.out.println("Families");
+		System.out.format("+--------+--------+--------------------+------------+------------+------------+%n");
+		System.out.format("|   FID  |   ID   |      Name          |  Gender    |  Birthday  |  Age       |%n");
+		System.out.format("+--------+--------+--------------------+------------+------------+------------+%n");
+
+		for (Record i : records) {
+			System.out.format(familyFormat, //
+					i.getProperty(PropertyType.child) != null ? i.getProperty(PropertyType.child).getValue() : null, //
+					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
+
+					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
+					i.getProperty(PropertyType.gender) != null ? i.getProperty(PropertyType.gender).getValue()
+							: null, //
+					i.getProperty(PropertyType.birthday) != null ? i.getProperty(PropertyType.birthday).getValue() : null, //
+					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //
+					
+			);
+		}
+		System.out.format("+--------+--------+--------------------+------------+------------+------------+%n");
+		System.out.println("");
+	}
 }
