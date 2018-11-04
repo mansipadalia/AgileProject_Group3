@@ -33,7 +33,7 @@ public class GEDCOMInfo {
 		errors.addAll(US_Parent.parentsNotTooOld(p));
 		errors.addAll(US_Sibling.fewerThanFifteenSiblings(p));
 		errors.addAll(US_Gender.maleLastNames(p));
-
+		errors.addAll(US_MarriageDivorceDates.divorceBeforeDeath(p));
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
