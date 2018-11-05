@@ -160,7 +160,7 @@ public class US_List {
 							.compareTo((String) i2.getProperty(PropertyType.child).getValue()) + ((Integer) i1.getProperty(PropertyType.age).getValue())
 					.compareTo((Integer) i2.getProperty(PropertyType.age).getValue())));
 
-<<<<<<< HEAD
+
 	// US30
 
 	public static List<Record> living_married(Parser p) {
@@ -179,12 +179,11 @@ public class US_List {
 
 		return family;
 	}
-=======
-					
+
 		}
 	
 		return records;
 
 }
->>>>>>> b4295829043c8ddb0a60372869bdcd94b3e8412b
+
 }
