@@ -184,4 +184,54 @@ public class US_MarriageDivorceDates {
 			}
 			return errors;
 		}
+	
+	//US 06
+	public static List<Error> divorceBeforeDeath(Parser p) {
+
+		List<Error> errors = new ArrayList<Error>();
+		Error error = new Error();
+
+		for (Record i : p.getFamilyList()) {
+			String husbandID = i.getProperty(PropertyType.husbandID) != null
+					? (String) i.getProperty(PropertyType.husbandID).getValue()
+					: null;
+			String wifeID = i.getProperty(PropertyType.wifeID) != null
+					? (String) i.getProperty(PropertyType.wifeID).getValue()
+					: null;
+					
+			LocalDate divorceDate = i.getProperty(PropertyType.divorced) != null
+					? (LocalDate) i.getProperty(PropertyType.divorced).getValue()
+					: null;
+
+			String[] IDs = new String[] { husbandID, wifeID };
+
+			for (String id : IDs) {
+
+				Predicate<Record> byId = x -> x.getProperty(PropertyType.id).getValue().equals(id);
+				List<Record> res = p.getIndividualList().stream().filter(byId).collect(Collectors.<Record>toList());
+
+				if (id != null) {
+					LocalDate DeathDate = res.get(0).getProperty(PropertyType.death) != null
+							? (LocalDate) res.get(0).getProperty(PropertyType.death).getValue()
+							: null;
+
+					if (DeathDate != null && divorceDate != null
+							&& (divorceDate).isAfter(DeathDate)) {
+
+						error = new Error();
+						error.setErrorType(ErrorType.ERROR);
+						error.setRecordType(RecordType.FAMILY);
+						error.setUserStoryNumber("US06");
+						error.setLineNumber(i.getProperty(PropertyType.divorced).getLineNumber());
+						error.setId((String) i.getProperty(PropertyType.id).getValue());
+						error.setMessage("Divorce Date " + divorceDate + " (" + i.getProperty(PropertyType.id).getValue() 
+								+ ") occurs after Death Date " + DeathDate + " of Individual " + res.get(0).getProperty(PropertyType.id).getValue());
+						errors.add(error);
+					}
+				}
+			}
+
+		}
+		return errors;
+	}
 }
