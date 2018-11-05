@@ -49,5 +49,22 @@ public class US_List {
 	}
 
 
+	// US30
 
+	public static List<Record> living_married(Parser p) {
+
+		List<Record> family = new ArrayList<Record>();
+
+		for (Record i : p.getFamilyList()) {
+			LocalDate marriageDate = i.getProperty(PropertyType.married) != null
+					? (LocalDate) i.getProperty(PropertyType.married).getValue()
+					: null;
+
+			if (marriageDate != null && deathDate.isBefore(LocalDate.now())) {
+				family.add(i);
+			}
+		}
+
+		return family;
+	}
 }
