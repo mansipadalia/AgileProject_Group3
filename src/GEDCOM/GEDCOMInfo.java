@@ -17,12 +17,15 @@ public class GEDCOMInfo {
 	private static void displayErrors(Parser p) {
 		List<Error> errors = new ArrayList<Error>();
 
+		/* ------------------- SPRINT 1 -------------------- */
 		errors.addAll(US_MarriageDivorceDates.birthBeforeMarriage(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDivorce(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDeath(p));
 		errors.addAll(US_BirthDeathDates.birthBeforeDeath(p));
 		errors.addAll(US_GeneralDates.datesBeforeCurrentDate(p));
 		errors.addAll(US_Age.lessThanOneFiftyAge(p));
+		
+		/* ------------------- SPRINT 2 -------------------- */
 		errors.addAll(US_Uniqueness.uniqueNameBirthDate(p));
 		errors.addAll(US_Uniqueness.uniqueFirstNameBirthDate(p));
 		errors.addAll(US_Sibling.siblingSpacing(p));
@@ -31,6 +34,8 @@ public class GEDCOMInfo {
 		errors.addAll(US_Parent.birthBeforeDeathOfParents(p));
 		errors.addAll(US_MarriageDivorceDates.marriageAfter14(p));
 		errors.addAll(US_Parent.parentsNotTooOld(p));
+		
+		/* ------------------- SPRINT 3 -------------------- */
 		errors.addAll(US_Sibling.fewerThanFifteenSiblings(p));
 		errors.addAll(US_Gender.maleLastNames(p));
 		errors.addAll(US_MarriageDivorceDates.divorceBeforeDeath(p));
