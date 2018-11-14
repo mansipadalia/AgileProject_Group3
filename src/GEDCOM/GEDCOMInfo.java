@@ -39,6 +39,10 @@ public class GEDCOMInfo {
 		errors.addAll(US_Sibling.fewerThanFifteenSiblings(p));
 		errors.addAll(US_Gender.maleLastNames(p));
 		errors.addAll(US_MarriageDivorceDates.divorceBeforeDeath(p));
+		
+		/* ------------------- SPRINT 4 -------------------- */
+		errors.addAll(US_Gender.correctGenderForRole(p));
+		
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
