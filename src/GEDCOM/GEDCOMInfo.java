@@ -11,7 +11,7 @@ public class GEDCOMInfo {
 		displayIndividuals(p.getIndividualList());
 		displayFamilies(p.getFamilyList());
 		displayErrors(p);
-
+		
 	}
 
 	private static void displayErrors(Parser p) {
@@ -42,6 +42,7 @@ public class GEDCOMInfo {
 		
 		/* ------------------- SPRINT 4 -------------------- */
 		errors.addAll(US_Gender.correctGenderForRole(p));
+		errors.addAll(US_Consistency.correspondingEntries(p));
 		
 		for (Error i : errors) {
 			System.out.println(i.toString());
