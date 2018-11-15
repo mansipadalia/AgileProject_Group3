@@ -229,8 +229,9 @@ public class Test_List {
 		record.setProperty(PropertyType.death, new Property(null, 0));
 		record.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 03, 10), 0));
 		record.setProperty(PropertyType.divorced, new Property(null, 0));
-
+		
 		assertEquals(true, record.recordEquals(livingMarried.get(0)));
+
 	}
 
 	// US28
