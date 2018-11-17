@@ -169,5 +169,85 @@ public class US_List {
 		}
 		return records;
 	}
+	
+	// US31
+	public static List<Record> livingSingle(Parser p) {
+		List<Record> individuals = new ArrayList<Record>();
+		
+		for (Record i : p.getIndividualList()) {
+		
+			int individualAge = i.getProperty(PropertyType.age) != null
+					? (int) i.getProperty(PropertyType.age).getValue()
+					: null;
+					
+			if (i.getProperty(PropertyType.age) != null && individualAge > 30 && i.getProperty(PropertyType.spouse) == null) {
+					individuals.add(i);
+				}
+			}
+		return individuals;
+	}
+	
+	// US 34
+	public static List<Record> largeAgeDifferences(Parser p) {
+		List<Record> records = new ArrayList<Record>();
 
+		for (Record i : p.getFamilyList()) {
+
+			String familyId = i.getProperty(PropertyType.id) != null
+					? (String) i.getProperty(PropertyType.id).getValue()
+					: null;
+					
+			LocalDate marriagedate = i.getProperty(PropertyType.married) != null
+					? (LocalDate) i.getProperty(PropertyType.married).getValue()
+					: null;
+					
+			String husbandID = i.getProperty(PropertyType.husbandID) != null
+					? (String) i.getProperty(PropertyType.husbandID).getValue()
+					: null;
+			
+			String wifeID = i.getProperty(PropertyType.wifeID) != null 
+					? (String) i.getProperty(PropertyType.wifeID).getValue()
+					: null;	
+					
+			Predicate<Record> byHId = x -> x.getProperty(PropertyType.id).getValue().equals(husbandID);
+			List<Record> resH = p.getIndividualList().stream().filter(byHId).collect(Collectors.<Record>toList());
+					
+			int hAge = resH.get(0).getProperty(PropertyType.age) != null
+					? (int) resH.get(0).getProperty(PropertyType.age).getValue()
+					: null;
+					
+			LocalDate husbandBday = resH.get(0).getProperty(PropertyType.birthday) != null
+					? (LocalDate) resH.get(0).getProperty(PropertyType.birthday).getValue()
+					: null;
+										
+			Predicate<Record> byWId = x -> x.getProperty(PropertyType.id).getValue().equals(wifeID);
+			List<Record> resW = p.getIndividualList().stream().filter(byWId).collect(Collectors.<Record>toList());
+					
+			Integer wAge = resW.get(0).getProperty(PropertyType.age) != null
+					? (int) resW.get(0).getProperty(PropertyType.age).getValue()
+					: null;
+					
+			LocalDate wifeBday = resH.get(0).getProperty(PropertyType.birthday) != null
+					? (LocalDate) resH.get(0).getProperty(PropertyType.birthday).getValue()
+					: null;
+					
+			if ( husbandBday.isBefore(marriagedate) && wifeBday.isBefore(marriagedate) && (resH.get(0).getProperty(PropertyType.alive).getValue().equals(true))
+					&& (resW.get(0).getProperty(PropertyType.alive).getValue().equals(true)) ) {
+				if ( (hAge > wAge && hAge > 2*wAge) || (wAge > hAge && wAge > 2*hAge) ) {
+					Record record = new Record();
+					record.setProperty(PropertyType.id, new Property(familyId, 0));
+					record.setProperty(PropertyType.married, new Property(marriagedate, 0));
+					record.setProperty(PropertyType.husbandID, new Property(husbandID, 0));
+					record.setProperty(PropertyType.husbandName, i.getProperty(PropertyType.husbandName));
+					record.setProperty(PropertyType.divorced, new Property(hAge, 0));
+					record.setProperty(PropertyType.wifeID, new Property(wifeID, 0));
+					record.setProperty(PropertyType.wifeName, i.getProperty(PropertyType.wifeName));
+					record.setProperty(PropertyType.children, new Property(wAge, 0));
+					
+					records.add(record);
+				}
+			}	
+		}
+		return records;
+	}
 }
