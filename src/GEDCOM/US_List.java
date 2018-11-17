@@ -169,5 +169,82 @@ public class US_List {
 		}
 		return records;
 	}
+	
+	
+	//US 33
+			public static List<Record> orphans(Parser p) {
+				
+			List<Record> records = new ArrayList<Record>();
+			
+			for (Record i : p.getFamilyList()) {
+				
+				ArrayList<LocalDate> deathDates = new ArrayList<LocalDate>();
 
+
+				if (i.getProperty(PropertyType.children) != null) {
+					Object[] childrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
+					String[] childrenIds = Arrays.copyOf(childrenIdList, childrenIdList.length, String[].class);
+
+					String familyId = i.getProperty(PropertyType.id) != null
+							? (String) i.getProperty(PropertyType.id).getValue()
+							: null;
+					
+					String husbandID = i.getProperty(PropertyType.husbandID) != null
+									? (String) i.getProperty(PropertyType.husbandID).getValue()
+									: null;
+					String wifeID = i.getProperty(PropertyType.wifeID) != null
+									? (String) i.getProperty(PropertyType.wifeID).getValue()
+									: null;
+					String IDs[] = {husbandID,wifeID};
+					
+				
+					for(String id : IDs)	{
+						
+					Predicate<Record> byId = x -> x.getProperty(PropertyType.id).getValue().equals(id);
+					List<Record> res = p.getIndividualList().stream().filter(byId).collect(Collectors.<Record>toList());
+					if (id != null) {
+						LocalDate DeathDate = res.get(0).getProperty(PropertyType.death) != null
+								? (LocalDate) res.get(0).getProperty(PropertyType.death).getValue()
+								: null;
+					deathDates.add(DeathDate);
+					}
+					}
+					//for(int j=0; j<deathDates.size(); j++) {
+					if(deathDates.size()>1) {
+					if(deathDates.get(0) != null && deathDates.get(1)!= null) {
+					
+						for (String id1 : childrenIds) {
+
+						Predicate<Record> byId1 = x -> x.getProperty(PropertyType.id).getValue().equals(id1);
+						List<Record> res1 = p.getIndividualList().stream().filter(byId1).collect(Collectors.<Record>toList());
+		
+						int age = res1.get(0).getProperty(PropertyType.age) != null
+								? (int) res1.get(0).getProperty(PropertyType.age).getValue()
+								: null;
+						String name = res1.get(0).getProperty(PropertyType.name) != null
+										? (String) res1.get(0).getProperty(PropertyType.name).getValue()
+										: null;
+										if(age < 18) {
+											Record record = new Record();
+											record.setProperty(PropertyType.child, new Property(familyId, 0));
+											record.setProperty(PropertyType.id, new Property(id1, 0));
+											record.setProperty(PropertyType.name, new Property(name, 0));
+											record.setProperty(PropertyType.age, new Property(age, 0));
+											records.add(record);
+										}
+					}
+				 }
+					
+					
+				}
+					}
+					}
+
+				
+			
+			
+
+				return records;
+			}
+			
 }

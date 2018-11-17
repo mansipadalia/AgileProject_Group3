@@ -143,5 +143,42 @@ public class US_Uniqueness {
 		return errors;
 
 	}
+	
+	// US 22
+	
+	public static List<Error> uniqueIds(Parser p) {
+		
+		List<Error> errors = new ArrayList<Error>();
+		Error error = new Error();
+		ArrayList<String> familyIds = new ArrayList<String>();
+
+		for (Record i : p.getFamilyList()) {
+			
+			String id = i.getProperty(PropertyType.id) != null ? (String) i.getProperty(PropertyType.id).getValue()
+					: null;
+			for (int a = 0; a < familyIds.size(); a++) {
+			familyIds.add(id);
+			}
+		
+			for (int b = 0; b < familyIds.size(); b++) {
+				for (int c = b + 1; c < familyIds.size(); c++) {
+					if (familyIds.get(b).equals(familyIds.get(c))) {
+						error = new Error();
+						error.setErrorType(ErrorType.ERROR);
+						error.setRecordType(RecordType.FAMILY);
+						error.setUserStoryNumber("US22");
+						error.setLineNumber(i.getProperty(PropertyType.id).getLineNumber());
+						error.setId(id);
+						error.setMessage("More than one families have same IDs " + id );
+						errors.add(error);
+					}	
+				}
+			}
+		}
+			return errors;
+				}
+	
+		
+	
 
 }

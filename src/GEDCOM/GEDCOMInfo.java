@@ -43,6 +43,7 @@ public class GEDCOMInfo {
 		/* ------------------- SPRINT 4 -------------------- */
 		errors.addAll(US_Gender.correctGenderForRole(p));
 		errors.addAll(US_Consistency.correspondingEntries(p));
+		errors.addAll(US_Uniqueness.uniqueIds(p));
 		
 		for (Error i : errors) {
 			System.out.println(i.toString());
@@ -69,6 +70,10 @@ public class GEDCOMInfo {
 		List<Record> List_US28 = US_List.orderSiblingsByAge(p);
 		System.out.println("US28 : List of Siblings By Age");
 		displaySiblingsByage(List_US28);
+		
+		List<Record> List_US33 = US_List.orphans(p);
+		System.out.println("US33 : List of all orphans");
+		displayOrphans(List_US33);
 
 	}
 
@@ -183,6 +188,28 @@ public class GEDCOMInfo {
 			);
 		}
 		System.out.format("+--------+--------+--------------------+------------+------------+------------+%n");
+		System.out.println("");
+	}
+	
+	private static void displayOrphans(List<Record> records) {
+		String familyFormat = "|%1$-8s|%2$-8s|%3$-20s|%4$-12s|%n";
+		System.out.println("Families");
+		System.out.format("+--------+--------+--------------------+------------+%n");
+		System.out.format("|   FID  |   ID   |      Name          |  Age       |%n");
+		System.out.format("+--------+--------+--------------------+------------+%n");
+
+		for (Record i : records) {
+			System.out.format(familyFormat, //
+					i.getProperty(PropertyType.child) != null ? i.getProperty(PropertyType.child).getValue() : null, //
+					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
+
+					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
+					
+					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //
+					
+			);
+		}
+		System.out.format("+--------+--------+--------------------+------------+%n");
 		System.out.println("");
 	}
 }
