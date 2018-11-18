@@ -289,6 +289,8 @@ public void testuniqueids_error_1(){
 	
 	Record family = new Record();
 	family.setProperty(PropertyType.id, new Property("F01", 1));
+	FList.add(family);
+	family = new Record();
 	family.setProperty(PropertyType.id, new Property("F01", 2));
 	FList.add(family);
 	Parser p = new Parser(IList, FList);
@@ -311,8 +313,10 @@ public void testuniqueids_error_2(){
 	
 	Record individual = new Record();
 	individual.setProperty(PropertyType.id, new Property("I01", 1));
+	IList.add(individual);
+	individual = new Record();
 	individual.setProperty(PropertyType.id, new Property("I01", 2));
-	FList.add(individual);
+	IList.add(individual);
 	Parser p = new Parser(IList, FList);
 	List<Error> errors = US_Uniqueness.uniqueIds(p);
 	
@@ -321,8 +325,8 @@ public void testuniqueids_error_2(){
 	error.setRecordType(RecordType.INDIVIDUAL);
 	error.setUserStoryNumber("US22");
 	error.setLineNumber(1);
-	error.setId("F01");
-	error.setMessage("More than one families have same IDs I01");
+	error.setId("I01");
+	error.setMessage("More than one Individuals have same IDs I01");
 	assertEquals(error.toString(), errors.get(0).toString());
 }
 }	
