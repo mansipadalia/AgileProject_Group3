@@ -151,34 +151,85 @@ public class US_Uniqueness {
 		List<Error> errors = new ArrayList<Error>();
 		Error error = new Error();
 		ArrayList<String> familyIds = new ArrayList<String>();
+		ArrayList<Integer> famLineNOs = new ArrayList<Integer>();
+		ArrayList<String> displayId = new ArrayList<String>();
+		ArrayList<Integer> displayLine = new ArrayList<Integer>();
 
+		ArrayList<String> individualIds = new ArrayList<String>();
+		ArrayList<Integer> indLineNOs = new ArrayList<Integer>();
+		ArrayList<String> displayIndId = new ArrayList<String>();
+		ArrayList<Integer> displayIndLine = new ArrayList<Integer>();
+		
 		for (Record i : p.getFamilyList()) {
 			
 			String id = i.getProperty(PropertyType.id) != null ? (String) i.getProperty(PropertyType.id).getValue()
 					: null;
-			for (int a = 0; a < familyIds.size(); a++) {
 			familyIds.add(id);
+			int lineNO = i.getProperty(PropertyType.id) != null ? (int) i.getProperty(PropertyType.id).getLineNumber()
+					: null;
+			famLineNOs.add(lineNO);
 			}
 		
 			for (int b = 0; b < familyIds.size(); b++) {
 				for (int c = b + 1; c < familyIds.size(); c++) {
 					if (familyIds.get(b).equals(familyIds.get(c))) {
+						if (!(displayId.contains(familyIds.get(b)))) {
+							displayId.add(familyIds.get(b));
+							displayLine.add(famLineNOs.get(b));
+						}
+					}
+				}
+			}
+				
+				for (int d = 0; d < displayId.size(); d++) {
 						error = new Error();
 						error.setErrorType(ErrorType.ERROR);
 						error.setRecordType(RecordType.FAMILY);
 						error.setUserStoryNumber("US22");
-						error.setLineNumber(i.getProperty(PropertyType.id).getLineNumber());
-						error.setId(id);
-						error.setMessage("More than one families have same IDs " + id );
+						error.setLineNumber(displayLine.get(d));
+						error.setId(displayId.get(d));
+						error.setMessage("More than one families have same IDs " + displayId.get(d) );
 						errors.add(error);
 					}	
+				
+			
+		
+		
+for (Record i : p.getIndividualList()) {
+			
+			String id = i.getProperty(PropertyType.id) != null ? (String) i.getProperty(PropertyType.id).getValue()
+					: null;
+			individualIds.add(id);
+			int lineNO = i.getProperty(PropertyType.id) != null ? (int) i.getProperty(PropertyType.id).getLineNumber()
+					: null;
+			indLineNOs.add(lineNO);
+			}
+		
+			for (int b = 0; b < individualIds.size(); b++) {
+				for (int c = b + 1; c < individualIds.size(); c++) {
+					if (individualIds.get(b).equals(individualIds.get(c))) {
+						if (individualIds.get(b).equals(individualIds.get(c))) {
+							if (!(displayIndId.contains(individualIds.get(b)))) {
+								displayIndId.add(individualIds.get(b));
+								displayIndLine.add(indLineNOs.get(b));
+							}
+						}
+					}
 				}
 			}
-		}
-			return errors;
-				}
-	
-		
-	
+					
+					for (int d = 0; d < displayIndId.size(); d++) {
+						error = new Error();
+						error.setErrorType(ErrorType.ERROR);
+						error.setRecordType(RecordType.INDIVIDUAL);
+						error.setUserStoryNumber("US22");
+						error.setLineNumber(displayIndLine.get(d));
+						error.setId(displayIndId.get(d));
+						error.setMessage("More than one Individuals have same IDs " + displayIndId.get(d) );
+						errors.add(error);
+					}					
 
+					return errors;
+	}
+	
 }

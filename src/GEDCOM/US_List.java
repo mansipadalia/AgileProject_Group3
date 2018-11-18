@@ -172,15 +172,12 @@ public class US_List {
 	
 	
 	//US 33
-			public static List<Record> orphans(Parser p) {
-				
-			List<Record> records = new ArrayList<Record>();
+	@SuppressWarnings("unchecked")
+	public static List<Record> orphans(Parser p) {			
+	List<Record> records = new ArrayList<Record>();
 			
 			for (Record i : p.getFamilyList()) {
-				
 				ArrayList<LocalDate> deathDates = new ArrayList<LocalDate>();
-
-
 				if (i.getProperty(PropertyType.children) != null) {
 					Object[] childrenIdList = ((List<String>) i.getProperty(PropertyType.children).getValue()).toArray();
 					String[] childrenIds = Arrays.copyOf(childrenIdList, childrenIdList.length, String[].class);
@@ -209,7 +206,6 @@ public class US_List {
 					deathDates.add(DeathDate);
 					}
 					}
-					//for(int j=0; j<deathDates.size(); j++) {
 					if(deathDates.size()>1) {
 					if(deathDates.get(0) != null && deathDates.get(1)!= null) {
 					
@@ -217,13 +213,15 @@ public class US_List {
 
 						Predicate<Record> byId1 = x -> x.getProperty(PropertyType.id).getValue().equals(id1);
 						List<Record> res1 = p.getIndividualList().stream().filter(byId1).collect(Collectors.<Record>toList());
-		
+						
+						String name = res1.get(0).getProperty(PropertyType.name) != null
+								? (String) res1.get(0).getProperty(PropertyType.name).getValue()
+								: null;
+								
 						int age = res1.get(0).getProperty(PropertyType.age) != null
 								? (int) res1.get(0).getProperty(PropertyType.age).getValue()
 								: null;
-						String name = res1.get(0).getProperty(PropertyType.name) != null
-										? (String) res1.get(0).getProperty(PropertyType.name).getValue()
-										: null;
+						
 										if(age < 18) {
 											Record record = new Record();
 											record.setProperty(PropertyType.child, new Property(familyId, 0));

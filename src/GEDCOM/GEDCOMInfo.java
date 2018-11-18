@@ -202,11 +202,8 @@ public class GEDCOMInfo {
 			System.out.format(familyFormat, //
 					i.getProperty(PropertyType.child) != null ? i.getProperty(PropertyType.child).getValue() : null, //
 					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
-
 					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
-					
-					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //
-					
+					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //		
 			);
 		}
 		System.out.format("+--------+--------+--------------------+------------+%n");
