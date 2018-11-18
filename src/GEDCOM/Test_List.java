@@ -361,4 +361,36 @@ public class Test_List {
 
 		assertEquals(true, record.recordEquals(largeAgeDifference.get(0)));
 	}
+	
+	// US35
+		@Test
+		public void testlistRecentBirths() {
+			List<Record> IList = new ArrayList<Record>();
+
+			Record individual = new Record();
+			individual.setProperty(PropertyType.id, new Property("F01", 1));
+			individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2018, 11, 14), 2));
+			IList.add(individual);
+
+			Parser p = new Parser(IList, IList);
+			List<Record> listRecentBirths = US_List.listRecentBirths(p);
+
+			assertEquals(individual, listRecentBirths.get(0));
+		}
+		
+		// US36
+				@Test
+				public void testlistRecentDeaths() {
+					List<Record> IList = new ArrayList<Record>();
+
+					Record individual = new Record();
+					individual.setProperty(PropertyType.id, new Property("F01", 1));
+					individual.setProperty(PropertyType.death, new Property(LocalDate.of(2018, 11, 14), 2));
+					IList.add(individual);
+
+					Parser p = new Parser(IList, IList);
+					List<Record> listRecentDeaths = US_List.listRecentDeaths(p);
+
+					assertEquals(individual, listRecentDeaths.get(0));
+			}
 }
