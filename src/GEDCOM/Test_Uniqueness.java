@@ -237,4 +237,9 @@ public void testuniqueFirstNameBirthDate_Success_3(){
 	error.setId("F01");
 	assertEquals(0, errors.size());
 	}
+public void testuniqueIds_Success_1(){
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+	Record family = new Record();
+}
 }	
