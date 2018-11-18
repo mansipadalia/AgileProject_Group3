@@ -39,7 +39,7 @@ public class Test_Uniqueness {
 		error.setMessage("Name Sophia Smith and  Birthday 1992-02-20 is same as 4: I02: Sophia Smith and Birthday 1992-02-20");
 		assertEquals(error.toString(), errors.get(0).toString());
 	}
-	
+	@Test
 	public void testuniqueNameBirthDateSuccess_1() {
 
 		List<Record> IList = new ArrayList<Record>();
@@ -58,7 +58,7 @@ public class Test_Uniqueness {
 		List<Error> errors = US_Uniqueness.uniqueNameBirthDate(p);
 		assertEquals(0, errors.size());
 	}
-
+	@Test
 	public void testuniqueNameBirthDateSuccess_2() {
 
 		List<Record> IList = new ArrayList<Record>();
@@ -77,7 +77,7 @@ public class Test_Uniqueness {
 		List<Error> errors = US_Uniqueness.uniqueNameBirthDate(p);
 		assertEquals(0, errors.size());
 	}
-	
+	@Test
 	public void testuniqueNameBirthDateSuccess_3() {
 
 		List<Record> IList = new ArrayList<Record>();
@@ -135,7 +135,7 @@ public void testuniqueFirstNameBirthDate_error(){
 	error.setMessage("More than one child in a family have the same first name Sophia and birthday 1992-02-20");
 	assertEquals(error.toString(), errors.get(0).toString());
 	}
-
+@Test
 public void testuniqueFirstNameBirthDate_Success_1(){
 	
 	List<Record> IList = new ArrayList<Record>();
@@ -169,7 +169,7 @@ public void testuniqueFirstNameBirthDate_Success_1(){
 	error.setId("F01");
 	assertEquals(0, errors.size());
 	}
-
+@Test
 public void testuniqueFirstNameBirthDate_Success_2(){
 	
 	List<Record> IList = new ArrayList<Record>();
@@ -203,7 +203,7 @@ public void testuniqueFirstNameBirthDate_Success_2(){
 	error.setId("F01");
 	assertEquals(0, errors.size());
 	}
-	
+@Test
 public void testuniqueFirstNameBirthDate_Success_3(){
 	
 	List<Record> IList = new ArrayList<Record>();
@@ -237,9 +237,92 @@ public void testuniqueFirstNameBirthDate_Success_3(){
 	error.setId("F01");
 	assertEquals(0, errors.size());
 	}
+@Test
 public void testuniqueIds_Success_1(){
+	
 	List<Record> IList = new ArrayList<Record>();
 	List<Record> FList = new ArrayList<Record>();
+	
 	Record family = new Record();
+	family.setProperty(PropertyType.id, new Property("F01", 1));
+	family.setProperty(PropertyType.id, new Property("F02", 2));
+	FList.add(family);
+	
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueIds(p);
+	
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.FAMILY);
+	error.setUserStoryNumber("US22");
+	error.setLineNumber(1);
+	error.setId("F01");
+	assertEquals(0, errors.size());
+}
+
+@Test
+public void testuniqueIds_Success_2(){
+	
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+	
+	Record individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I01", 1));
+	individual.setProperty(PropertyType.id, new Property("I02", 2));
+	IList.add(individual);
+	
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueIds(p);
+	
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.INDIVIDUAL);
+	error.setUserStoryNumber("US22");
+	error.setLineNumber(1);
+	error.setId("F01");
+	assertEquals(0, errors.size());
+}
+@Test
+public void testuniqueids_error_1(){
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+	
+	Record family = new Record();
+	family.setProperty(PropertyType.id, new Property("F01", 1));
+	family.setProperty(PropertyType.id, new Property("F01", 2));
+	FList.add(family);
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueIds(p);
+	
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.FAMILY);
+	error.setUserStoryNumber("US22");
+	error.setLineNumber(1);
+	error.setId("F01");
+	error.setMessage("More than one families have same IDs F01");
+	assertEquals(error.toString(), errors.get(0).toString());
+}
+
+@Test
+public void testuniqueids_error_2(){
+	List<Record> IList = new ArrayList<Record>();
+	List<Record> FList = new ArrayList<Record>();
+	
+	Record individual = new Record();
+	individual.setProperty(PropertyType.id, new Property("I01", 1));
+	individual.setProperty(PropertyType.id, new Property("I01", 2));
+	FList.add(individual);
+	Parser p = new Parser(IList, FList);
+	List<Error> errors = US_Uniqueness.uniqueIds(p);
+	
+	Error error = new Error();
+	error.setErrorType(ErrorType.ERROR);
+	error.setRecordType(RecordType.INDIVIDUAL);
+	error.setUserStoryNumber("US22");
+	error.setLineNumber(1);
+	error.setId("F01");
+	error.setMessage("More than one families have same IDs I01");
+	assertEquals(error.toString(), errors.get(0).toString());
 }
 }	
