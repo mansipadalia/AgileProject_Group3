@@ -262,14 +262,14 @@ public class US_List {
 					: null;
 					
 					if (birthDate != null && birthDate.isBefore(LocalDate.now())) {
-						LocalDate birthDay = LocalDate.of(LocalDate.now().getYear(), birthDate.getMonthValue(),
-								birthDate.getDayOfMonth());
-						long diffDays = ChronoUnit.DAYS.between(LocalDate.now(), birthDay);
-						if (diffDays < 30 && diffDays > 0) {
-										individuals.add(i);
-									}
+						LocalDate today = LocalDate.now();
+						
+						long days = ChronoUnit.DAYS.between(birthDate, today);
+						if(days < 31 && days > 0) {
+								individuals.add(i);
+											}
+										}
 								}
-			}
 		return individuals;
 	}
 	
@@ -283,10 +283,9 @@ public class US_List {
 						? (LocalDate) i.getProperty(PropertyType.death).getValue()
 						: null;
 			if (deathDate != null && deathDate.isBefore(LocalDate.now())) {
-				LocalDate deathDay = LocalDate.of(LocalDate.now().getYear(), deathDate.getMonthValue(),
-				deathDate.getDayOfMonth());
-				long diffDays = ChronoUnit.DAYS.between(LocalDate.now(), deathDay);
-				if (diffDays < 30 && diffDays > 0) {
+				LocalDate today = LocalDate.now();
+				long days = ChronoUnit.DAYS.between(deathDate, today);
+				if(days < 31 && days > 0) {
 								individuals.add(i);
 							}
 						}
