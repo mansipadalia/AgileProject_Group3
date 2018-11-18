@@ -362,6 +362,54 @@ public class Test_List {
 		assertEquals(true, record.recordEquals(largeAgeDifference.get(0)));
 	}
 	
+
+	//US 33
+	@Test
+	public void testorphans() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
+		individual.setProperty(PropertyType.age, new Property("1", 2));
+		
+		
+		IList.add(individual);
+		individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I02", 5));
+		individual.setProperty(PropertyType.name, new Property("Jacob /Smith/", 6));
+		individual.setProperty(PropertyType.age, new Property("2", 2));
+		
+		IList.add(individual);
+		
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 9));
+		List<String> children = new ArrayList<String>();
+		children.add("I01");
+		children.add("I02");
+		family.setProperty(PropertyType.children, new Property(children, 10));
+		FList.add(family);
+		
+		Parser p = new Parser(IList, FList);
+		List<Record> orphans = US_List.orphans(p);
+		
+		Record record1 = new Record();
+		record1.setProperty(PropertyType.child, new Property("F01", 0));
+		record1.setProperty(PropertyType.id, new Property("I01", 0));
+		record1.setProperty(PropertyType.name, new Property("Sophia /Smith/", 0));
+		record1.setProperty(PropertyType.age, new Property(25, 0));
+
+		Record record2 = new Record();
+		record2.setProperty(PropertyType.child, new Property("F01", 0));
+		record2.setProperty(PropertyType.id, new Property("I02", 0));
+		record2.setProperty(PropertyType.name, new Property("Jacob /Smith/", 0));
+		record2.setProperty(PropertyType.age, new Property(26, 0));
+
+		assertEquals(true, record1.recordEquals(orphans.get(0)));
+		assertEquals(true, record2.recordEquals(orphans.get(1)));
+	}
+
 	// US35
 		@Test
 		public void testlistRecentBirths() {
@@ -393,4 +441,5 @@ public class Test_List {
 
 					assertEquals(individual, listRecentDeaths.get(0));
 			}
+
 }
