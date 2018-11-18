@@ -70,6 +70,14 @@ public class GEDCOMInfo {
 		System.out.println("US34 : List of Large Age Differences");
 		displaylargeAgeDifferences(List_US34);
 		
+		List<Record> List_US35 = US_List.listRecentBirths(p);
+		System.out.println("US35 : List of Recent Births");
+		displayIndividuals(List_US35);
+		
+		List<Record> List_US36 = US_List.listRecentDeaths(p);
+		System.out.println("US36 : List of Recent Deaths");
+		displayIndividuals(List_US36);
+		
 		List<Record> List_US38 = US_List.upcomingBirthdays(p);
 		System.out.println("US38 : List of Upcoming Birthdays");
 		displayIndividuals(List_US38);
@@ -77,6 +85,8 @@ public class GEDCOMInfo {
 		List<Record> List_US39 = US_List.upcomingAnniversaries(p);
 		System.out.println("US39 : List of Upcoming Anniversaries");
 		displayFamilies(List_US39);
+		
+		
 	}
 
 	@SuppressWarnings({ "unchecked" })
