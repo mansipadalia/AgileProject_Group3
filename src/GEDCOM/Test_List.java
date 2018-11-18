@@ -282,8 +282,83 @@ public class Test_List {
 
 		assertEquals(true, record1.recordEquals(siblings.get(0)));
 		assertEquals(true, record2.recordEquals(siblings.get(1)));
+	}
+	
+	// US31
+	@Test
+	public void testLivingSingle_Valid() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+		Record individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1960, 11, 18), 2));
+		IList.add(individual);
+		
+		Parser p = new Parser(IList, FList);
+		List<Record> single = US_List.livingSingle(p);
+		
+		assertEquals(individual, single.get(0));
 
 	}
 	
+	// US31
+	@Test
+	public void testLivingSingle_Invalid() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
 
+		Record individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2000, 11, 18), 2));
+		IList.add(individual);
+		
+		Parser p = new Parser(IList, FList);
+		List<Record> single = US_List.livingSingle(p);
+		
+		assertEquals(0, single.size());
+	}
+	
+
+
+	// US34
+	@Test
+	public void testLargeAgeDifferences() {
+		List<Record> IList = new ArrayList<Record>();
+		List<Record> FList = new ArrayList<Record>();
+
+
+		Record individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I01", 1));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1960, 10, 10), 3));
+		IList.add(individual);
+		individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I02", 5));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(1991, 06, 11), 7));
+		IList.add(individual);
+		
+		Record family = new Record();
+		family.setProperty(PropertyType.id, new Property("F01", 9));
+		family.setProperty(PropertyType.married, new Property(LocalDate.of(2016, 01, 01), 11));
+		family.setProperty(PropertyType.husbandID, new Property("I01", 13));
+		family.setProperty(PropertyType.husbandName, new Property("John /Davis/", 15));
+		family.setProperty(PropertyType.wifeID, new Property("I02", 17));
+		family.setProperty(PropertyType.wifeName, new Property("Maria /Davis/", 19));
+		FList.add(family);
+		
+		Parser p = new Parser(IList, FList);
+		List<Record> largeAgeDifference = US_List.largeAgeDifferences(p);
+		
+		Record record = new Record();
+		record.setProperty(PropertyType.id, new Property("F01", 0));
+		record.setProperty(PropertyType.married, new Property(LocalDate.of(2016, 01, 01), 0));
+		record.setProperty(PropertyType.husbandID, new Property("I01", 0));
+		record.setProperty(PropertyType.husbandName, new Property("John /Davis/",0));
+		record.setProperty(PropertyType.wifeID, new Property("I02", 0));
+		record.setProperty(PropertyType.wifeName, new Property("Maria /Davis/",0));
+		record.setProperty(PropertyType.divorced, new Property(58, 0));
+		record.setProperty(PropertyType.children, new Property(27, 0));
+
+		assertEquals(true, record.recordEquals(largeAgeDifference.get(0)));
+	}
 }
