@@ -18,7 +18,7 @@ public class Test_List {
 
 		Record individual = new Record();
 		individual.setProperty(PropertyType.id, new Property("I01", 1));
-		individual.setProperty(PropertyType.birthday, new Property(LocalDate.of(2010, 11, 18), 2));
+		individual.setProperty(PropertyType.birthday, new Property((LocalDate.now()).plusDays(10).minusYears(5), 2));
 		IList.add(individual);
 
 		Parser p = new Parser(IList, FList);
@@ -85,7 +85,7 @@ public class Test_List {
 
 		Record family = new Record();
 		family.setProperty(PropertyType.id, new Property("F01", 1));
-		family.setProperty(PropertyType.married, new Property(LocalDate.of(2010, 11, 18), 2));
+		family.setProperty(PropertyType.married, new Property((LocalDate.now()).plusDays(10).minusYears(5), 2));
 		FList.add(family);
 
 		Parser p = new Parser(IList, FList);
