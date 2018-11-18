@@ -371,43 +371,46 @@ public class Test_List {
 
 		Record individual = new Record();
 		individual.setProperty(PropertyType.id, new Property("I01", 1));
-		individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
-		individual.setProperty(PropertyType.age, new Property("1", 2));
-		
-		
+		individual.setProperty(PropertyType.death, new Property(LocalDate.now().minusYears(1), 4));
 		IList.add(individual);
 		individual = new Record();
-		individual.setProperty(PropertyType.id, new Property("I02", 5));
+		individual.setProperty(PropertyType.id, new Property("I02", 1));
+		individual.setProperty(PropertyType.death, new Property(LocalDate.now().minusYears(1), 3));
+		IList.add(individual);
+		individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I03", 1));
+		individual.setProperty(PropertyType.name, new Property("Sophia /Smith/", 2));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.now().minusYears(30), 3));
+		individual.setProperty(PropertyType.death, new Property(LocalDate.now().minusYears(5), 4));
+		IList.add(individual);
+		individual = new Record();
+		individual.setProperty(PropertyType.id, new Property("I04", 5));
 		individual.setProperty(PropertyType.name, new Property("Jacob /Smith/", 6));
-		individual.setProperty(PropertyType.age, new Property("2", 2));
+		individual.setProperty(PropertyType.birthday, new Property(LocalDate.now().minusYears(2), 7));
 		
 		IList.add(individual);
 		
 		Record family = new Record();
 		family.setProperty(PropertyType.id, new Property("F01", 9));
+		family.setProperty(PropertyType.husbandID, new Property("I01", 13));
+		family.setProperty(PropertyType.wifeID, new Property("I02", 0));
 		List<String> children = new ArrayList<String>();
-		children.add("I01");
-		children.add("I02");
+		children.add("I03");
+		children.add("I04");
 		family.setProperty(PropertyType.children, new Property(children, 10));
 		FList.add(family);
 		
-		Parser p = new Parser(IList, FList);
-		List<Record> orphans = US_List.orphans(p);
+		Parser p1 = new Parser(IList, FList);
+		List<Record> orphans = US_List.orphans(p1);
 		
 		Record record1 = new Record();
 		record1.setProperty(PropertyType.child, new Property("F01", 0));
-		record1.setProperty(PropertyType.id, new Property("I01", 0));
-		record1.setProperty(PropertyType.name, new Property("Sophia /Smith/", 0));
-		record1.setProperty(PropertyType.age, new Property(25, 0));
-
-		Record record2 = new Record();
-		record2.setProperty(PropertyType.child, new Property("F01", 0));
-		record2.setProperty(PropertyType.id, new Property("I02", 0));
-		record2.setProperty(PropertyType.name, new Property("Jacob /Smith/", 0));
-		record2.setProperty(PropertyType.age, new Property(26, 0));
-
+		record1.setProperty(PropertyType.id, new Property("I04", 0));
+		record1.setProperty(PropertyType.name, new Property("Jacob /Smith/", 0));
+		record1.setProperty(PropertyType.birthday, new Property(LocalDate.now().minusYears(2), 7));
+		record1.setProperty(PropertyType.death, new Property(null, 7));
+		
 		assertEquals(true, record1.recordEquals(orphans.get(0)));
-		assertEquals(true, record2.recordEquals(orphans.get(1)));
 	}
 
 	// US35

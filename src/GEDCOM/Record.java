@@ -32,7 +32,7 @@ public class Record {
 			if (this.properties.get(PropertyType.birthday) == null)
 				return null;
 
-			LocalDate endDate = this.properties.containsKey(PropertyType.death)
+			LocalDate endDate = (this.properties.containsKey(PropertyType.death) && this.properties.get(PropertyType.death).getValue()!=null)
 					? (LocalDate) this.properties.get(PropertyType.death).getValue()
 					: LocalDate.now();
 			Property age = new Property();

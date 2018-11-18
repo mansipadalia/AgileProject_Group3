@@ -24,7 +24,7 @@ public class GEDCOMInfo {
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDivorce(p));
 		errors.addAll(US_MarriageDivorceDates.marriageBeforeDeath(p));
 		errors.addAll(US_Age.lessThanOneFiftyAge(p));
-		
+
 		/* ------------------- SPRINT 2 -------------------- */
 		errors.addAll(US_Parent.birthBeforeMarriageOfParents(p));
 		errors.addAll(US_Parent.birthBeforeDeathOfParents(p));
@@ -34,17 +34,17 @@ public class GEDCOMInfo {
 		errors.addAll(US_Sibling.fiveSiblingSpacing(p));
 		errors.addAll(US_Uniqueness.uniqueNameBirthDate(p));
 		errors.addAll(US_Uniqueness.uniqueFirstNameBirthDate(p));
-		
+
 		/* ------------------- SPRINT 3 -------------------- */
 		errors.addAll(US_MarriageDivorceDates.divorceBeforeDeath(p));
 		errors.addAll(US_Sibling.fewerThanFifteenSiblings(p));
 		errors.addAll(US_Gender.maleLastNames(p));
-		
+
 		/* ------------------- SPRINT 4 -------------------- */
 		errors.addAll(US_Gender.correctGenderForRole(p));
 		errors.addAll(US_Consistency.correspondingEntries(p));
 		errors.addAll(US_Uniqueness.uniqueIds(p));
-		
+
 		for (Error i : errors) {
 			System.out.println(i.toString());
 		}
@@ -54,20 +54,15 @@ public class GEDCOMInfo {
 		List<Record> List_US28 = US_List.orderSiblingsByAge(p);
 		System.out.println("US28 : List of Siblings By Age");
 		displaySiblingsByage(List_US28);
-		
+
 		List<Record> List_US29 = US_List.deceased(p);
 		System.out.println("US29 : List of Deceased Individuals");
 		displayIndividuals(List_US29);
-		
+
 		List<Record> List_US30 = US_List.livingMarried(p);
 		System.out.println("US30 : List of Living Married Individuals");
 		displayLivingMarried(List_US30);
-		
 
-//		List<Record> List_US28 = US_List.orderSiblingsByAge(p);
-//		System.out.println("US28 : List of Siblings By Age");
-//		displaySiblingsByage(List_US28);
-		
 		List<Record> List_US33 = US_List.orphans(p);
 		System.out.println("US33 : List of all orphans");
 		displayOrphans(List_US33);
@@ -75,29 +70,27 @@ public class GEDCOMInfo {
 		List<Record> List_US31 = US_List.livingSingle(p);
 		System.out.println("US31 : List of Living Single");
 		displayIndividuals(List_US31);
-		
+
 		List<Record> List_US34 = US_List.largeAgeDifferences(p);
 		System.out.println("US34 : List of Large Age Differences");
 		displaylargeAgeDifferences(List_US34);
-		
+
 		List<Record> List_US35 = US_List.listRecentBirths(p);
 		System.out.println("US35 : List of Recent Births");
 		displayIndividuals(List_US35);
-		
+
 		List<Record> List_US36 = US_List.listRecentDeaths(p);
 		System.out.println("US36 : List of Recent Deaths");
 		displayIndividuals(List_US36);
-		
+
 		List<Record> List_US38 = US_List.upcomingBirthdays(p);
 		System.out.println("US38 : List of Upcoming Birthdays");
 		displayIndividuals(List_US38);
 
-
 		List<Record> List_US39 = US_List.upcomingAnniversaries(p);
 		System.out.println("US39 : List of Upcoming Anniversaries");
 		displayFamilies(List_US39);
-		
-		
+
 	}
 
 	@SuppressWarnings({ "unchecked" })
@@ -203,17 +196,16 @@ public class GEDCOMInfo {
 					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
 
 					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
-					i.getProperty(PropertyType.gender) != null ? i.getProperty(PropertyType.gender).getValue()
+					i.getProperty(PropertyType.gender) != null ? i.getProperty(PropertyType.gender).getValue() : null, //
+					i.getProperty(PropertyType.birthday) != null ? i.getProperty(PropertyType.birthday).getValue()
 							: null, //
-					i.getProperty(PropertyType.birthday) != null ? i.getProperty(PropertyType.birthday).getValue() : null, //
 					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //
-					
+
 			);
 		}
 		System.out.format("+--------+--------+--------------------+------------+------------+------------+%n");
 		System.out.println("");
 	}
-	
 
 	private static void displayOrphans(List<Record> records) {
 		String familyFormat = "|%1$-8s|%2$-8s|%3$-20s|%4$-12s|%n";
@@ -227,16 +219,12 @@ public class GEDCOMInfo {
 					i.getProperty(PropertyType.child) != null ? i.getProperty(PropertyType.child).getValue() : null, //
 					i.getProperty(PropertyType.id) != null ? i.getProperty(PropertyType.id).getValue() : null, //
 					i.getProperty(PropertyType.name) != null ? i.getProperty(PropertyType.name).getValue() : null, //
-					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //		
+					i.getProperty(PropertyType.age) != null ? i.getProperty(PropertyType.age).getValue() : null //
 			);
 		}
 		System.out.format("+--------+--------+--------------------+------------+%n");
 
 		System.out.println("");
-	}
-	
-
-
 	}
 
 	private static void displaylargeAgeDifferences(List<Record> family) {
@@ -261,9 +249,8 @@ public class GEDCOMInfo {
 					i.getProperty(PropertyType.wifeName) != null ? i.getProperty(PropertyType.wifeName).getValue()
 							: null, //
 					i.getProperty(PropertyType.divorced) != null ? i.getProperty(PropertyType.divorced).getValue()
-									: null, //
-					i.getProperty(PropertyType.children) != null
-							? i.getProperty(PropertyType.children).getValue()
+							: null, //
+					i.getProperty(PropertyType.children) != null ? i.getProperty(PropertyType.children).getValue()
 							: null //
 			);
 		}
