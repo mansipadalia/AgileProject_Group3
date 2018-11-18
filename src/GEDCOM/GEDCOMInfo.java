@@ -231,9 +231,13 @@ public class GEDCOMInfo {
 			);
 		}
 		System.out.format("+--------+--------+--------------------+------------+%n");
+
 		System.out.println("");
 	}
 	
+
+
+	}
 
 	private static void displaylargeAgeDifferences(List<Record> family) {
 		String familyFormat = "|%1$-8s|%2$-12s|%3$-12s|%4$-19s|%5$-9s|%6$-21s|%7$-15s|%8$-12s|%n";
