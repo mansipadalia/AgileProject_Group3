@@ -319,8 +319,6 @@ public class Test_List {
 		assertEquals(0, single.size());
 	}
 	
-
-
 	// US34
 	@Test
 	public void testLargeAgeDifferences() {

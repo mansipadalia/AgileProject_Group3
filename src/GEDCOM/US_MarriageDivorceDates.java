@@ -119,10 +119,10 @@ public class US_MarriageDivorceDates {
 
 						error = new Error();
 						error.setErrorType(ErrorType.ERROR);
-						error.setRecordType(RecordType.FAMILY);
+						error.setRecordType(RecordType.INDIVIDUAL);
 						error.setUserStoryNumber("US05");
 						error.setLineNumber(i.getProperty(PropertyType.married).getLineNumber());
-						error.setId((String) i.getProperty(PropertyType.id).getValue());
+						error.setId((String) res.get(0).getProperty(PropertyType.id).getValue());
 						error.setMessage("Marriage Date " + marriageDate + " (" + i.getProperty(PropertyType.id).getValue() 
 								+ ") occurs after Death Date " + DeathDate);
 						errors.add(error);
