@@ -217,10 +217,10 @@ public class Test_MarriageDivorceDates {
 
 		Error error = new Error();
 		error.setErrorType(ErrorType.ERROR);
-		error.setRecordType(RecordType.FAMILY);
+		error.setRecordType(RecordType.INDIVIDUAL);
 		error.setUserStoryNumber("US05");
 		error.setLineNumber(8);
-		error.setId("F01");
+		error.setId("I01");
 		error.setMessage("Marriage Date 2015-01-01 (F01) occurs after Death Date 2010-01-01");
 
 		assertEquals(error.toString(), errors.get(0).toString());

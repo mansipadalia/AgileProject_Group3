@@ -62,14 +62,14 @@ public class GEDCOMInfo {
 		List<Record> List_US30 = US_List.livingMarried(p);
 		System.out.println("US30 : List of Living Married Individuals");
 		displayLivingMarried(List_US30);
+		
+		List<Record> List_US31 = US_List.livingSingle(p);
+		System.out.println("US31 : List of Living Single");
+		displayIndividuals(List_US31);
 
 		List<Record> List_US33 = US_List.orphans(p);
 		System.out.println("US33 : List of all orphans");
 		displayOrphans(List_US33);
-
-		List<Record> List_US31 = US_List.livingSingle(p);
-		System.out.println("US31 : List of Living Single");
-		displayIndividuals(List_US31);
 
 		List<Record> List_US34 = US_List.largeAgeDifferences(p);
 		System.out.println("US34 : List of Large Age Differences");
